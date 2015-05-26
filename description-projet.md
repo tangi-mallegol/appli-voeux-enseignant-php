@@ -12,11 +12,17 @@
 
 ###Technologies
 
-* PHP, HTML, CSS, Javascript
+* PHP, HTML, CSS, Javascript, MySQL
 * Framework PHP MVC : CodeIgniter
 * Framework Javascript : Jquery
 * Framework CSS : Bootstrap
 * ...
+
+###Aménagement du site
+
+* Back-end avec CodeIgniter qui gérera les routes et les authentifications d'utilisateurs
+* Front-end avec Bootstrap et Jquery et peut-être d'autres plugins qui permettront la visualisation des dates de cours
+
 
 ###Repartition des taches 
 
