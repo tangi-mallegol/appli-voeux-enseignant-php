@@ -51,6 +51,7 @@
                 <div class="panel-footer ">
                     <a href="/Admin/set-password">Changer de mot de passe</a>
                 </div>
+                
             </div>
         </div>
     </div>

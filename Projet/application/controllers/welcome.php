@@ -3,28 +3,41 @@
 class Welcome extends CI_Controller {
 
 	public function index($erreur = null)
-	{
+	{  
+        if(isset($erreur))
+            $array["erreur"] = "erreur";
+        else 
+            $array["erreur"] = "";
         $login = isset($_SESSION["login"]) ? $_SESSION["login"] : null;
         if(isset($login)){
             $this->load_controller("home","index");
         }
         $this->load->helper(array('form'));
-		$this->load->view('welcome_message');
+		$this->load->view('welcome_message',$array);
 	}
 
     public function login(){
-        $login = isset($_POST["login"]) ? $_POST["login"] : null;
-        $password = isset($_POST["password"]) ? $_POST["password"] : null;
-        if($login != null && $login == "test"){
-            if($password != null && $password == "test"){
-                $_SESSION["login"] = $login;
-                $_SESSION["admin"] = true;
-                $this->load->helper('url');
-                redirect("/home");
+        if(isset($_POST["login"])){
+            if(isset($_POST["password"])){
+                $this->load->model("user");
+                $user = $this->user->loginEnseignant($_POST["login"],$_POST["password"]);
+                if(isset($user)){
+                    //Authentification validée
+                    $_SESSION["login"] = $user["login"];
+                    $_SESSION["admin"] = $user["administrateur"];
+                    $this->load->helper('url');
+                    redirect("/home");
+                }
+                else
+                {
+                    //Erreur d'Authentification
+                }
             }
-            else $this->index();
         }
-        else $this->index();
+        //Champ mot de passe ou mail non trouvé
+        else {
+            $this->index($user);
+        }
     }
 
     function load_controller($controller, $method = 'index')
