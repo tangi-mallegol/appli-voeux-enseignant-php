@@ -15,11 +15,12 @@ class Welcome extends CI_Controller {
     public function login(){
         $login = isset($_POST["login"]) ? $_POST["login"] : null;
         $password = isset($_POST["password"]) ? $_POST["password"] : null;
-        if($login != null && $login == "tangi.mallegol@gmail.com"){
+        if($login != null && $login == "test"){
             if($password != null && $password == "test"){
                 $_SESSION["login"] = $login;
                 $_SESSION["admin"] = true;
-                $this->load_controller("home","index");
+                $this->load->helper('url');
+                redirect("/home");
             }
             else $this->index();
         }
