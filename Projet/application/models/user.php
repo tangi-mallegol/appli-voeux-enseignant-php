@@ -28,6 +28,19 @@
 		function loginEnseignant($login, $mdp){
 			return $this->db->get_where('enseignant', array('login' => $login, 'pwd' => $mdp))->row_array();	
 		}
+
+		function createUser($login, $password, $nom, $prénom, $statut, $statutaire, $administrateur){
+			
+		}
+
+		function setUser($login,$nom,$prenom,$statut,$admin){
+
+		}
+
+		function deleteUser($login){
+			//On ne supprime pas
+			//On met actif à 0
+		}
 	}
 
 ?>

@@ -5,6 +5,7 @@ class home extends CI_Controller {
     public function index(){
     	if(isset($_SESSION["login"])){
 			$array["login"] = $_SESSION["login"];
+            $array["admin"] = $_SESSION["admin"];
 	        $this->load->helper(array('form'));
 	        $this->load->view('home.php',$array);
     	}

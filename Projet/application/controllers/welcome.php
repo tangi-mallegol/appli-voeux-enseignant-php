@@ -10,7 +10,8 @@ class Welcome extends CI_Controller {
             $array["erreur"] = "";
         $login = isset($_SESSION["login"]) ? $_SESSION["login"] : null;
         if(isset($login)){
-            $this->load_controller("home","index");
+            $this->load->helper('url');
+            redirect("/home");
         }
         $this->load->helper(array('form'));
 		$this->load->view('welcome_message',$array);
