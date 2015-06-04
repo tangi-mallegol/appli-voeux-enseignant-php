@@ -18,7 +18,7 @@ echo '<div id="top-navbar" >
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home <span class="sr-only">(current)</span></a></li>
+                    <li class="active"><a href="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home <span class="sr-only">(current)</span></a></li>
                     <li><a href="#">Vos cours</a></li>
                     <li><a href="#">Tous les cours</a></li>
                     <li><a href="gestion-cours">Gestion des cours</a></li>

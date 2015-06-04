@@ -11,6 +11,8 @@ class Utilisateurs extends CI_Controller {
         }
         else if($_SESSION["admin"] = true){
             $array["admin"] =  $_SESSION["admin"];
+            if(isset($erreur))
+                $array["erreur"] = $erreur;
             $this->load->model("user");
             $array["enseignants"] =  $this->user->selectEnseignant();
             $this->load->helper(array('form'));
@@ -40,14 +42,15 @@ class Utilisateurs extends CI_Controller {
         $statutaire = $_POST["statutaire"];
         $admin = isset($_POST["admin"]) ? 1 : 0;
         $this->load->model("user");
-        //$result = $this->user->createUser($login,$password,$nom,$prenom,$statut,$statutaire,$admin);
+        $result = $this->user->createUser($login,$password,$nom,$prenom,$statut,$statutaire,$admin);
+        $array["erreur"] = $result == false ? false : true;
         $array["nom"] = $nom;
         $array["prenom"] = $prenom;
         $array["login"] = $login;
         $array["statut"] = $statut;
         $array["admin"] = $admin;
         $this->load->helper(array('form'));
-        $this->load->view('result.php',$array);
+        $this->load->view('index.php',$array);
     }
 
     public function modifier(){

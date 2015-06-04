@@ -29,8 +29,11 @@
 			return $this->db->get_where('enseignant', array('login' => $login, 'pwd' => $mdp))->row_array();	
 		}
 
-		function createUser($login, $password, $nom, $prénom, $statut, $statutaire, $administrateur){
-			
+		function createUser($login, $password, $nom, $prenom, $statut, $statutaire, $administrateur){
+			$result = $this->db->get_where('enseignant',array('login' = $login));
+			if(!isset($result))
+				return $this->db->insert_batch('enseignant', array(array('login' => $login, 'pwd' => $password, 'nom' => $nom, 'prenom' => $prenom, 'statut' => $statut, 'statutaire' => $statutaire, 'actif' => true, 'administrateur' => $administrateur)));
+			return false;
 		}
 
 		function setUser($login,$nom,$prenom,$statut,$admin){

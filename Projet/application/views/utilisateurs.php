@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Utilisateurs</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -87,11 +88,6 @@
 			var login = _this[0].children[3].innerHTML;
 			var statut = _this[0].children[4].innerHTML;
 			var admin = _this[0].children[5].innerHTML.length == 0 ? "" : "checked";
-			console.log(nom);
-			console.log(prenom);
-			console.log(login);
-			console.log(statut);
-			console.log(admin);
 			$("#form_enseignant").html('<form action="utilisateurs/modifier" method="post" accept-charset="utf-8" class="form-horizontal"><input type="hidden" name="login" value="' + login +'"><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="nom" placeholder="Nom" name="nom" value="' + nom +'"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom" value="' + prenom +'"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="statut" placeholder="Statut" name="statut" value="' + statut + '"></div></div><div class="form-group"><div class=" col-sm-10"><div class="checkbox"><label><input type="checkbox" name="admin" ' + admin +'> Administrateur</label></div></div></div><div class="form-group"><div class="col-sm-10"><button type="submit" class="btn btn-default">Soumettre</button></div></div></form>');
 		};
 	</script>	
