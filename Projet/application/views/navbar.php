@@ -2,7 +2,7 @@
     function showNavbar($administrateur = false){
         if($administrateur == true){
 echo '<div id="top-navbar" >
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default ">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -12,16 +12,16 @@ echo '<div id="top-navbar" >
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Metezers</a>
+                <a class="navbar-brand" href="home">Metezers</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Vos cours</a></li>
+                    <li><a href="mes_cours">Vos cours</a></li>
                     <li><a href="#">Tous les cours</a></li>
-                    <li><a href="gestion-cours">Gestion des cours</a></li>
+                    <li><a href="gestion_cours">Gestion des cours</a></li>
                     <li><a href="utilisateurs">Utilisateurs</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -45,14 +45,14 @@ echo '<div id="top-navbar" >
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Metezers</a>
+                <a class="navbar-brand" href="home">Metezers</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Vos cours</a></li>
+                    <li><a href="vos_cours">Vos cours</a></li>
                     <li><a href="#">Tous les cours</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

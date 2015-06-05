@@ -15,6 +15,11 @@
 		include("navbar.php");
 		showNavbar($admin);
 	?>
+	<style type="text/css" media="screen">
+		.tr_enseignant{
+			cursor : pointer;
+		}
+	</style>
 	<section class="row">
 	<div class="container">
 		<div class="col-lg-9">

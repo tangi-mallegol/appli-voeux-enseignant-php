@@ -1,1 +1,5 @@
-Deny from all
+RewriteEngine On
+RewriteCond   $1 !^(index\.php|robots\.txt|favicon.ico|assets)
+RewriteCond   %{REQUEST_FILENAME} !-f
+RewriteRule   ^(?!(assets|media))(.*) /web/index.php/$1 [L,QSA]
+RewriteRule   ^assets/(.*)$ /web/assets/$1 [L,QSA]

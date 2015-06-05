@@ -43,14 +43,10 @@ class Utilisateurs extends CI_Controller {
         $admin = isset($_POST["admin"]) ? 1 : 0;
         $this->load->model("user");
         $result = $this->user->createUser($login,$password,$nom,$prenom,$statut,$statutaire,$admin);
-        $array["erreur"] = $result == false ? false : true;
-        $array["nom"] = $nom;
-        $array["prenom"] = $prenom;
-        $array["login"] = $login;
-        $array["statut"] = $statut;
-        $array["admin"] = $admin;
-        $this->load->helper(array('form'));
-        $this->load->view('index.php',$array);
+        $erreur = $result == false ? true : false;
+        if($erreur)
+            $this->index($erreur);
+        $this->index();
     }
 
     public function modifier(){
