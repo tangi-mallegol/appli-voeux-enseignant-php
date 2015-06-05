@@ -25,7 +25,7 @@
 		<div class="col-lg-9">
 		<h1>Gestion d'utilisateurs</h1>
 			<a href="#" type="button" class="btn btn-primary" id='create'>Créer un enseignant</a>
-			<a href="#" type="button" class="btn btn-success hidden" id="modifier">Modifier l'enseignant</a>
+			<a href="#" type="button" class="btn btn-danger hidden" id="delete">Supprimer l'enseignant</a>
 			<br/><br/>
 			<div class="hidden form" id="form_enseignant">
 				
@@ -71,7 +71,6 @@
 	</section>
 	<script>
 
-		form_modifier = ''
     	$(".tr_enseignant").click(function(){
     		console.log($(this));
     		$(".tr_enseignant").each(function() {
@@ -86,6 +85,9 @@
 			$("#form_enseignant").removeClass('hidden');
 			$("#form_enseignant").html('<form action="utilisateurs/creer" method="post" accept-charset="utf-8" class="form-horizontal"><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="nom" placeholder="Nom" name="nom"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="login" placeholder="Identifiant" name="login"></div></div><div class="form-group"><div class="col-sm-10"><input type="password" class="form-control" id="password" placeholder="Mot de passe" name="password"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="statut" placeholder="statut" name="statut"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="statutaire" placeholder="Statutaire" name="statutaire"></div></div><div class="form-group"><div class=" col-sm-10"><div class="checkbox"><label><input type="checkbox" name="admin"> Administrateur</label></div></div></div><div class="form-group"><div class="col-sm-10"><button type="submit" class="btn btn-default">Soumettre</button></div></div></form>');
 		});
+		$("#delete").click(function(){
+			window.location = "delete?login=" + $("input[name='login']").val();
+		});
 
 		function RemplirInput(_this){
 			var nom = _this[0].children[1].innerHTML;
@@ -93,7 +95,7 @@
 			var login = _this[0].children[3].innerHTML;
 			var statut = _this[0].children[4].innerHTML;
 			var admin = _this[0].children[5].innerHTML.length == 0 ? "" : "checked";
-			$("#form_enseignant").html('<form action="utilisateurs/modifier" method="post" accept-charset="utf-8" class="form-horizontal"><input type="hidden" name="login" value="' + login +'"><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="nom" placeholder="Nom" name="nom" value="' + nom +'"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom" value="' + prenom +'"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="statut" placeholder="Statut" name="statut" value="' + statut + '"></div></div><div class="form-group"><div class=" col-sm-10"><div class="checkbox"><label><input type="checkbox" name="admin" ' + admin +'> Administrateur</label></div></div></div><div class="form-group"><div class="col-sm-10"><button type="submit" class="btn btn-default">Soumettre</button></div></div></form>');
+			$("#form_enseignant").html('<form action="utilisateurs/modifier" method="post" accept-charset="utf-8" class="form-horizontal" id="form_modifier"><input type="hidden" name="login" value="' + login +'"><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="nom" placeholder="Nom" name="nom" value="' + nom +'"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom" value="' + prenom +'"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="statut" placeholder="Statut" name="statut" value="' + statut + '"></div></div><div class="form-group"><div class=" col-sm-10"><div class="checkbox"><label><input type="checkbox" name="admin" ' + admin +'> Administrateur</label></div></div></div><div class="form-group"><div class="col-sm-10"><button type="submit" class="btn btn-default">Soumettre</button></div></div></form>');
 		};
 	</script>	
 </body>

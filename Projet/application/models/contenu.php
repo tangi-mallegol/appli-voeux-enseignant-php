@@ -8,43 +8,88 @@
 	    }
 
 	    //----------SELECT----------
-		function selectCours($login){
-			$sql = "SELECT * FROM contenu WHERE enseignant = ?";
-			return $this->db->query($sql, array($login));
+
+	    function selectTousLesCours($login = null){
+			$sql = "SELECT * FROM contenu";
+			return $this->db->query($sql);
 		}
 
-		function selectTP($login){
-			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant = ?";
-			return $this->db->query($sql, array('TP', $login));
+		function selectTousLesTPs($login = null){
+			$sql = "SELECT * FROM contenu WHERE type = ?";
+			return $this->db->query($sql, array('TP'));
 		}
 
-		function selectTD($login){
-			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant = ?";
-			return $this->db->query($sql, array('TD', $login));
+		function selectTousLesTDs($login = null){
+			$sql = "SELECT * FROM contenu WHERE type = ?";
+			return $this->db->query($sql, array('TD'));
 		}
 
-		function selectCM($login){
-			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant = ?";
-			return $this->db->query($sql, array('CM', $login));
+		function selectTousLesCMs(){
+			$sql = "SELECT * FROM contenu WHERE type = ?";
+			return $this->db->query($sql, array('CM'));
+		}
+
+		function selectCours($login = null){
+			if(isset($login)){
+				$sql = "SELECT * FROM contenu WHERE enseignant IS NOT NULL";
+				return $this->db->query($sql, array($login));
+			}
+			else{
+				$sql = "SELECT * FROM contenu";
+				return $this->db->query($sql);
+			}
+		}
+
+		function selectTP($login = null){
+			if(isset($login)){
+				$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant IS NOT NULL";
+				return $this->db->query($sql, array('TP', $login));
+			}
+			else{
+				$sql = "SELECT * FROM contenu WHERE type = ?";
+				return $this->db->query($sql, array('TP'));
+			}
+		}
+
+		function selectTD($login = null){
+			if(isset($login)){
+				$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant IS NOT NULL";
+				return $this->db->query($sql, array('TD', $login));
+			}
+			else{
+				$sql = "SELECT * FROM contenu WHERE type = ?";
+				return $this->db->query($sql, array('TD'));
+			}
+		}
+
+		function selectCM($login = null){
+			if(isset($login)){
+				$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant IS NOT NULL";
+				return $this->db->query($sql, array('CM', $login));
+			}
+			else{
+				$sql = "SELECT * FROM contenu WHERE type = ?";
+				return $this->db->query($sql, array('CM'));
+			}
 		}
 
 		function selectCoursSansEnseignant(){
-			$sql = "SELECT * FROM contenu WHERE enseignant = ?";
+			$sql = "SELECT * FROM contenu WHERE enseignant IS NULL";
 			return $this->db->query($sql, array(null));
 		}
 
 		function selectTPSansEnseignant(){
-			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant = ?";
+			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant IS NULL";
 			return $this->db->query($sql, array('TP', null));
 		}
 
 		function selectTDSansEnseignant(){
-			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant = ?";
+			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant IS NULL";
 			return $this->db->query($sql, array('TD', null));
 		}
 
 		function selectCMSansEnseignant(){
-			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant = ?";
+			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant IS NULL";
 			return $this->db->query($sql, array('CM', null));
 		}
 

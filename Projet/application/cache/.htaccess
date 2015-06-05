@@ -1,5 +1,7 @@
 RewriteEngine On
-RewriteCond   $1 !^(index\.php|robots\.txt|favicon.ico|assets)
-RewriteCond   %{REQUEST_FILENAME} !-f
-RewriteRule   ^(?!(assets|media))(.*) /web/index.php/$1 [L,QSA]
-RewriteRule   ^assets/(.*)$ /web/assets/$1 [L,QSA]
+
+RewriteBase /tangimallegol/YOURPath
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ /Projet/index.php?/$1 [L]

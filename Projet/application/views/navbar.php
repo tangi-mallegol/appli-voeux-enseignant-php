@@ -20,7 +20,7 @@ echo '<div id="top-navbar" >
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home <span class="sr-only">(current)</span></a></li>
                     <li><a href="mes_cours">Vos cours</a></li>
-                    <li><a href="#">Tous les cours</a></li>
+                    <li><a href="tous_les_cours">Tous les cours</a></li>
                     <li><a href="gestion_cours">Gestion des cours</a></li>
                     <li><a href="utilisateurs">Utilisateurs</a></li>
                 </ul>
@@ -53,7 +53,7 @@ echo '<div id="top-navbar" >
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home <span class="sr-only">(current)</span></a></li>
                     <li><a href="vos_cours">Vos cours</a></li>
-                    <li><a href="#">Tous les cours</a></li>
+                    <li><a href="tous_les_cours">Tous les cours</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="profil"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Profil</a></li>

@@ -49,6 +49,7 @@ class Utilisateurs extends CI_Controller {
         $this->index();
     }
 
+    //Pas testée
     public function modifier(){
         $nom = $_POST["nom"];
         $prenom = $_POST["prenom"];
@@ -61,6 +62,14 @@ class Utilisateurs extends CI_Controller {
         $array["login"] = $login;
         $array["statut"] = $statut;
         $array["admin"] = $admin;
+        //$result = $this->user->setUser($login,$nom,$prenom,$statut,$admin);
+        $this->load->helper(array('form'));
+        $this->load->view('result.php',$array);
+    }
+
+    //Pas testée
+    public function delete(){
+        $login = $_GET["login"];
         //$result = $this->user->setUser($login,$nom,$prenom,$statut,$admin);
         $this->load->helper(array('form'));
         $this->load->view('result.php',$array);
