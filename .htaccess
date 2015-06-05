@@ -1,0 +1,7 @@
+RewriteEngine On
+
+RewriteBase /tangimallegol/YOURPath
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ /Projet/index.php?/$1 [L]
