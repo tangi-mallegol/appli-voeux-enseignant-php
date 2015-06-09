@@ -23,4 +23,11 @@ class Tous_les_cours extends CI_Controller {
         $this->load->helper(array('form'));
         $this->load->view('tous_les_cours.php',$array);
 	}
+
+    public function get_info_cours($module, $partie){
+
+        $this->load->model("contenu");
+        $cours = $this->contenu->selectCoursModulePartie($module,$partie);
+        return json_encode($cours);
+    }
 }

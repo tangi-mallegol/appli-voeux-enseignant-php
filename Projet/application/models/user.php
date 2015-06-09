@@ -8,8 +8,8 @@
 	    }
 
 		function selectEnseignant($login = null){
-			if($login != null) return $this->db->get_where('enseignant', array('login' => $login))->result();	
-			else return $this->db->get('enseignant')->result();
+			if($login != null) return $this->db->get_where('enseignant', array('login' => $login))->result_array();	
+			else return $this->db->get('enseignant')->result_array();
 				
 			/*if($login != null) return $bdd->query('SELECT * FROM enseignant WHERE login = \'$where\'')->fetch();
 			else return $bdd->query('SELECT * FROM enseignant')->fetch();*/
