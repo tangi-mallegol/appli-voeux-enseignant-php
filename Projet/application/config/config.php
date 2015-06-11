@@ -28,7 +28,7 @@ $config['base_url'] = '';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '';
+$config['index_page'] = 'index.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -362,3 +362,22 @@ $config['proxy_ips'] = '';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
+
+/*function __autoload($class)
+{
+	if (file_exists(APPPATH."controllers/".$class.EXT))
+    {
+        require_once(APPPATH.'controllers/'.$class.EXT);
+    }
+	require_once(APPPATH.'controllers/main.php');
+}*/
+function __autoload($class)
+{
+    if (strpos($class, 'CI_') !== 0)
+    {
+        if (file_exists($file = APPPATH . 'core/' . $class . EXT))
+        {
+            include $file;
+        }
+    }
+} 

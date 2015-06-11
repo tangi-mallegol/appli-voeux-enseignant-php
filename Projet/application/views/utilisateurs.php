@@ -12,7 +12,7 @@
 </head>
 <body >
 	<?php
-		include("navbar.php");
+		require_once("navbar.php");
 		showNavbar($admin);
 	?>
 	<style type="text/css" media="screen">
@@ -23,6 +23,12 @@
 	<section class="row">
 	<div class="container">
 		<div class="col-lg-9">
+			<div>
+				<?php 
+					if(isset($erreur))
+						echo $erreur;
+				?>
+			</div>
 		<h1>Gestion d'utilisateurs</h1>
 			<a href="#" type="button" class="btn btn-primary" id='create'>Créer un enseignant</a>
 			<a href="#" type="button" class="btn btn-danger hidden" id="delete">Supprimer l'enseignant</a>
@@ -77,7 +83,7 @@
     			$(this).removeClass('active');
     		});
     		$(this).addClass('active');
-    		$("#modifier").removeClass('hidden');
+    		$("#delete").removeClass('hidden');
     		$("#form_enseignant").removeClass('hidden');
     		RemplirInput($(this));
     	});
@@ -86,7 +92,7 @@
 			$("#form_enseignant").html('<form action="utilisateurs/creer" method="post" accept-charset="utf-8" class="form-horizontal"><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="nom" placeholder="Nom" name="nom"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="login" placeholder="Identifiant" name="login"></div></div><div class="form-group"><div class="col-sm-10"><input type="password" class="form-control" id="password" placeholder="Mot de passe" name="password"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="statut" placeholder="statut" name="statut"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="statutaire" placeholder="Statutaire" name="statutaire"></div></div><div class="form-group"><div class=" col-sm-10"><div class="checkbox"><label><input type="checkbox" name="admin"> Administrateur</label></div></div></div><div class="form-group"><div class="col-sm-10"><button type="submit" class="btn btn-default">Soumettre</button></div></div></form>');
 		});
 		$("#delete").click(function(){
-			window.location = "delete?login=" + $("input[name='login']").val();
+			window.location = "/utilisateurs/delete?login=" + $("input[name='login']").val();
 		});
 
 		function RemplirInput(_this){

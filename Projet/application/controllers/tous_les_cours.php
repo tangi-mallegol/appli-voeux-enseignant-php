@@ -1,14 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Tous_les_cours extends CI_Controller {
+class Tous_les_cours extends MY_MainController {
 
 	public function index()
 	{
-        $login = isset($_SESSION["login"]) ? $_SESSION["login"] : null;
-        if(!isset($login)){
-            $this->load->helper('url');
-            redirect("/welcome");
-        }
+        $this->filter_access();
         $array["admin"] =  $_SESSION["admin"];
         $login = $_SESSION["login"];
         $this->load->model("contenu");
@@ -24,10 +20,21 @@ class Tous_les_cours extends CI_Controller {
         $this->load->view('tous_les_cours.php',$array);
 	}
 
-    public function get_info_cours($module, $partie){
-
+    public function get_info_cours(){
+        $module = $_GET['module'];
+        $partie = $_GET['partie'];
         $this->load->model("contenu");
         $cours = $this->contenu->selectCoursModulePartie($module,$partie);
-        return json_encode($cours);
+        $array["cours"] = $cours;
+        if(isset($cours[0]['enseignant'])){
+            $this->load->model("user");
+            $array['enseignant'] = $this->user->selectEnseignant($cours[0]['enseignant']);
+        }
+        /*if(isset($cours[0]['module']){
+            $this->load->model("contenu");
+            $array['enseignant'] = $this->contenu->selectCoursModulePartie($module,$partie);
+        }*/
+        $this->load->helper(array('form'));
+        $this->load->view('pop_up_cours.php',$array);
     }
 }

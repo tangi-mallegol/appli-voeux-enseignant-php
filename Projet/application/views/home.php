@@ -13,7 +13,7 @@
 </head>
 <body >
 <?php
-	include("navbar.php");
+	require_once("navbar.php");
 	showNavbar($admin);
 ?>
 <section class="row">

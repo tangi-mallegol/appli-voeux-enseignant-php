@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+	<script src="Projet/asset/js/donut_chart.js"></script>
     <style>
 			.chartSpace{
 				width: 800px;
@@ -47,33 +48,44 @@
 			// Display courses by type
 			function displayCoursesInfo($sort){
 				$sortTot = 0;
-				$tabSort =  $sort->result_array();
+				$content = '';
+				$tabSort =  $sort;
 				foreach ($tabSort as $aSort){
 					if($_SESSION["login"] == $aSort['enseignant']){
-							echo '<a class="btn btn-primary module_btn" data-toggle="collapse" href="http://localhost/Projet/index.php/'.strtolower($aSort['module']).'"
+							$content = $content.'<a class="btn btn-primary module_btn" data-toggle="collapse" href="http://localhost/Projet/index.php/'.strtolower($aSort['module']).'"
 											aria-expanded="false" aria-controls="collapseExample">'.$aSort['module'].'	: 	'.$aSort['hed'].'h</a>';
 							$sortTot = $sortTot + $aSort['hed'];
 					}
 				}
-				return $sortTot;
+				return array("total" => $sortTot, "content" => $content);
 			}
 
 			// Display the CM courses and save the total of cm
-			echo '<h2>Mes Cours Magistraux</h2>';
 			$CMTot = displayCoursesInfo($CM);
+			if($CMTot['total'] > 0){
+				echo '<h3>Mes Cours Magistraux</h3>';
+				echo $CMTot['content'];
+			}
+				
 
 			// Display the TD courses and save the total of cm
-			echo '<h2>Mes Travaux Dirigés</h2>';
 			$TDTot = displayCoursesInfo($TD);
-
+			if($TDTot['total'] > 0){
+				echo '<h3>Mes Travaux Dirigés</h3>';
+				echo $TDTot['content'];
+			}
+				
 			// Display the TP courses and save the total of cm
-			echo '<h2>Mes Travaux Pratiques</h2>';
 			$TPTot = displayCoursesInfo($TP);
+			if($TPTot['total'] > 0){
+				echo '<h3>Mes Travaux Pratiques</h3>';
+				echo $TPTot['content'];
+			}
 
-			$libreTot = 192 - ($CMTot + $TDTot + $TPTot);
+			$libreTot = 192 - ($CMTot['total'] + $TDTot['total'] + $TPTot['total']);
 
 			$labelTab = ["CM", "TD", "TP", "Libre"];
-			$valueTab = [$CMTot, $TDTot, $TPTot, $libreTot];
+			$valueTab = [$CMTot['total'], $TDTot['total'], $TPTot['total'], $libreTot];
 
 			//call the js function drawDonutChart
 			echo '<script type="text/javascript">drawDonutChart('.json_encode($labelTab).','.json_encode($valueTab).');</script>';

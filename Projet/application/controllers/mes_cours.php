@@ -1,14 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mes_cours extends CI_Controller {
+class Mes_cours extends MY_MainController {
 
 	public function index()
 	{
-        $login = isset($_SESSION["login"]) ? $_SESSION["login"] : null;
-        if(!isset($login)){
-            $this->load->helper('url');
-            redirect("/welcome");
-        }
+        $this->filter_access();
         $array["admin"] =  $_SESSION["admin"];
         $login = $_SESSION["login"];
         $this->load->model("contenu");

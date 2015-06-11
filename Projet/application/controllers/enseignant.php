@@ -1,14 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Enseignant extends CI_Controller {
+class Enseignant extends MY_MainController {
 
 	public function index($erreur = null)
 	{
-        $login = isset($_SESSION["login"]) ? $_SESSION["login"] : null;
-        if(!isset($login)){
-            $this->load->helper('url');
-            redirect("/welcome");
-        }
+        $this->filter_access();
+        
         $enseignant = $this->uri->segment(2);
         $this->load->model("user");
         $array["enseignant"] = $enseignant;

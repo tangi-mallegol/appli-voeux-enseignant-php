@@ -1,18 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class home extends CI_Controller {
+class home extends MY_MainController {
 
     public function index(){
-    	if(isset($_SESSION["login"])){
-			$array["login"] = $_SESSION["login"];
-            $array["admin"] = $_SESSION["admin"];
-	        $this->load->helper(array('form'));
-	        $this->load->view('home.php',$array);
-    	}
-    	else{
-    		$this->load->helper('url');
-            redirect("/welcome");
-    	}
+        $this->filter_access();
+		$array["login"] = $_SESSION["login"];
+        $array["admin"] = $_SESSION["admin"];
+        $this->load->helper(array('form'));
+        $this->load->view('home.php',$array);
     }
 
     public function deconnexion(){
