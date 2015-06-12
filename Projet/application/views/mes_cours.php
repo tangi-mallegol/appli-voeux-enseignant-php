@@ -7,7 +7,7 @@
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
-	<script src="Projet/asset/js/donut_chart.js"></script>
+	<script src="../../Projet/asset/js/donut_chart.js"></script>
     <style>
 			.chartSpace{
 				width: 800px;
@@ -66,7 +66,7 @@
 				echo '<h3>Mes Cours Magistraux</h3>';
 				echo $CMTot['content'];
 			}
-				
+
 
 			// Display the TD courses and save the total of cm
 			$TDTot = displayCoursesInfo($TD);
@@ -74,7 +74,7 @@
 				echo '<h3>Mes Travaux Dirigés</h3>';
 				echo $TDTot['content'];
 			}
-				
+
 			// Display the TP courses and save the total of cm
 			$TPTot = displayCoursesInfo($TP);
 			if($TPTot['total'] > 0){
