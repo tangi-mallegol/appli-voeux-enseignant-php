@@ -16,20 +16,24 @@ class Tous_les_cours extends MY_MainController {
         $array["TP_null"] =  $this->contenu->selectTPSansEnseignant();
         $array["TD_null"] =  $this->contenu->selectTDSansEnseignant();
         $array["CM_null"] =  $this->contenu->selectCMSansEnseignant();
+
+        $this->load->model("module");
+        $array["modulesEnseignants"] =  $this->module->selectTousLesModulesAvecInfosEnseignant();    
+        
         $this->load->helper(array('form'));
         $this->load->view('tous_les_cours.php',$array);
 	}
 
     public function get_info_cours(){
         $module = $_GET['module'];
-        $partie = $_GET['partie'];
-        $this->load->model("contenu");
-        $cours = $this->contenu->selectCoursModulePartie($module,$partie);
-        $array["cours"] = $cours;
-        if(isset($cours[0]['enseignant'])){
+        //$partie = $_GET['partie'];
+        $this->load->model("contenu");        
+        $array["listeCours"] = $this->contenu->selectCoursEnFctModule($module);
+
+        /*if(isset($cours[0]['enseignant'])){
             $this->load->model("user");
             $array['enseignant'] = $this->user->selectEnseignant($cours[0]['enseignant']);
-        }
+        }*/
         /*if(isset($cours[0]['module']){
             $this->load->model("contenu");
             $array['module'] = $this->module->selectCoursModulePartie($module,$partie);

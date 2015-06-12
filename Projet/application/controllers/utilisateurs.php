@@ -22,12 +22,7 @@ class Utilisateurs extends MY_MainController {
         $this->load->model("user");
         $this->load->model("contenu");
         $array["enseignants"] =  $this->user->selectEnseignant();
-        $i = 0;
-        foreach ($array["enseignants"] as $key) {
-            $x = $this->contenu->selectCountCoursForLogin($array["enseignants"][$i]["login"])[0]['sum(hed)'];
-            $array["enseignants"][$i]["nb_heure"] = $x == NULL ? 0 : $x;
-            $i ++;
-        }
+        $array['nb_heure'] = $this->contenu->selectCountCoursForLogin($login);
         $this->load->helper(array('form'));
         $this->load->view('utilisateurs.php',$array);
         /*}
