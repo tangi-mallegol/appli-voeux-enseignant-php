@@ -9,6 +9,16 @@
 
 	    //----------SELECT----------
 
+	    function selectCoursEnFctModule($module){
+	    	$sql = "SELECT * FROM contenu WHERE module = ?";
+			return $this->db->query($sql, array($module))->result_array();
+	    }
+
+	    function selectCountCoursForLogin($login){
+			$sql = "SELECT sum(hed) FROM contenu WHERE enseignant  = ?";
+			return $this->db->query($sql, array($login))->result_array();
+		}
+
 	    function selectCoursModulePartie($module, $partie){
 			$sql = "SELECT * FROM contenu WHERE module = ? AND partie = ?";
 			return $this->db->query($sql, array($module, $partie))->result_array();

@@ -20,7 +20,9 @@ class Utilisateurs extends MY_MainController {
             unset($_SESSION["erreur"]);
         }
         $this->load->model("user");
+        $this->load->model("contenu");
         $array["enseignants"] =  $this->user->selectEnseignant();
+        $array['nb_heure'] = $this->contenu->selectCountCoursForLogin($login);
         $this->load->helper(array('form'));
         $this->load->view('utilisateurs.php',$array);
         /*}
