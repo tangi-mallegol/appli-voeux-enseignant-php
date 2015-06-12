@@ -16,36 +16,67 @@
 				width: 48%;
 				height: 80px;
 				display: inline-block;
-				margin-bottom: 5px;
-				margin-right: 5px;
+				margin-bottom: 15px;
+				margin-right: 7px;
+
 			}
 			.userbox_header, .userbox_containt{
 				width: 100%;
 				height: 40px;
 			}
-			.userbox_header{
-				background-color: #449644;
+			.userbox_header_green{
+				background-color: #5CB85C;
 				border-top-right-radius: 4px;
 				border-top-left-radius: 4px;
 			}
-			.userbox_containt{
-				background-color: #5CB85C;
+			.userbox_containt_green{
+				background-color: #e7e7e7;
+				border-bottom-right-radius: 4px;
+				border-bottom-left-radius: 4px;
+			}
+			.userbox_header_red{
+				background-color: rgb(217, 83, 79);
+				border-top-right-radius: 4px;
+				border-top-left-radius: 4px;
+			}
+			.userbox_containt_red{
+				background-color: #e7e7e7;
+				border-bottom-right-radius: 4px;
+				border-bottom-left-radius: 4px;
+			}
+			.userbox_header_orange{
+				background-color: rgb(240, 173, 78);
+				border-top-right-radius: 4px;
+				border-top-left-radius: 4px;
+			}
+			.userbox_containt_orange{
+				background-color: #e7e7e7;
+				border-bottom-right-radius: 4px;
+				border-bottom-left-radius: 4px;
+			}
+			.userbox_header_blue{
+				background-color: rgb(124, 77, 255);
+				border-top-right-radius: 4px;
+				border-top-left-radius: 4px;
+			}
+			.userbox_containt_blue{
+				background-color: #e7e7e7;
 				border-bottom-right-radius: 4px;
 				border-bottom-left-radius: 4px;
 			}
 			.userbox_textinfo{
 				width: 46.5%;
-				color: #FFF;
+				color: white;
 				display: inline-block;
 				text-indent: 7%;
 				margin-top: 9px;
 				font-size: 18px;
 			}
+			.containt_textinfo{
+				color: #33443A;
+			}
 			.userbox_hiddeninfo{
 				display: none;
-			}
-			.glyphicon{
-				cursor: pointer;
 			}
     </style>
 </head>
@@ -98,21 +129,38 @@
 						<td class="prenom">'.$enseignant["prenom"].'</td>
 						<td class="login">'.$enseignant["login"].'</td>
 						<td class="statut">'.$enseignant["statut"].'</td>';*/
+						$pourcentage = $enseignant['nb_heure']/$enseignant['statutaire'];
+						$class = "";
+						$class2 = "";
+						if($pourcentage < 0.3){
+							$class = 'userbox_header_red';
+							$class2 = 'userbox_containt_red';
+						}
+						else if($pourcentage < 0.6){
+							$class = 'userbox_header_orange';
+							$class2 = 'userbox_containt_orange';
+						}
+						else if($pourcentage < 1){
+							$class = 'userbox_header_green';
+							$class2 = 'userbox_containt_green';
+						}
+						else{
+							$class = 'userbox_header_blue';
+							$class2 = 'userbox_containt_blue';
+						}
 						echo '<div class="userbox_profil">
-							<div class="userbox_header">
+							<div class="'.$class.'">
 								<p class="userbox_textinfo userbox_surname">'.$enseignant['nom'].'</p>
 								<p class="userbox_textinfo userbox_name">'.$enseignant['prenom'].'</p>
-								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 							</div>
-							<div class="userbox_containt">
+							<div class="'.$class2.'">
 								<div class="userbox_hiddeninfo userbox_login">'.$enseignant['login'].'</div>
-								<p class="userbox_textinfo userbox_statut">'.$enseignant['statut'].'</p>
-								<p class="userbox_textinfo">150/192h</p>';
+								<p class="userbox_textinfo containt_textinfo userbox_statut">'.$enseignant['statut'].'</p>
+								<p class="userbox_textinfo containt_textinfo">'.$enseignant['nb_heure'].'/'.$enseignant['statutaire'].'</p>';
 
 						if($enseignant["administrateur"] == 1){
 							//echo '<td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>';
 							echo '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>';
-
 						}
 						else{
 							//echo '<td></td>';
@@ -124,6 +172,7 @@
 				?>
 				<!--</tbody>
 			</table>-->
+
 		</article>
 	</div>
 		
