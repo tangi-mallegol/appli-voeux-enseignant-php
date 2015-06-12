@@ -32,7 +32,7 @@ class Tous_les_cours extends MY_MainController {
         }
         /*if(isset($cours[0]['module']){
             $this->load->model("contenu");
-            $array['enseignant'] = $this->contenu->selectCoursModulePartie($module,$partie);
+            $array['module'] = $this->module->selectCoursModulePartie($module,$partie);
         }*/
         $this->load->helper(array('form'));
         $this->load->view('pop_up_cours.php',$array);
