@@ -83,8 +83,7 @@
 				displayCoursesBox('Travaux Pratiques', $TPTot);
 
 				$libreTot = 192 - ($CMTot['total'] + $TDTot['total'] + $TPTot['total']);
-
-				$labelTab = ["CM", "TD", "TP", "Libre"];
+				$labelTab = ["CM (".$CMTot['total']." h)", "TD (".$TDTot['total']." h)", "TP (".$TPTot['total']." h)", "Libre (".$libreTot." h)"];
 				$valueTab = [$CMTot['total'], $TDTot['total'], $TPTot['total'], $libreTot];
 
 				//call the js function drawDonutChart
