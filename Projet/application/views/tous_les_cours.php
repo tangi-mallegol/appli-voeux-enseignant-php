@@ -13,7 +13,7 @@
 			padding: 0;
 		}
 		.module{
-			width: 48%;
+			width: 100%;
 			min-height: 80px;
 			display: inline-block;
 			margin-bottom: 10px;
@@ -44,6 +44,10 @@
 			margin-top: 10px;
 			margin-bottom: 10px;
 		}
+		.modulebox_containt a{
+			float:right;
+			margin-right:15px;
+		}
 		.modulebox_footer{
 			border-bottom-right-radius: 4px;
 			border-bottom-left-radius: 4px;
@@ -63,6 +67,10 @@
 		.btn-primary{
 			margin: 1px;
 		}
+		table {
+        border-collapse: separate;
+        border-spacing: 10px 5px;
+      	}
   </style>
 </head>
 <body >
@@ -90,36 +98,88 @@
 				//echo "<table>";
 				//echo "<tr><th>Identifiant</th><th>Publique</th><th>Semestre</th><th>Libellé</th><th>Nom du responsable</th><th>Prénom du responsable</th><th>Statut du responsable</th></tr>";
 				//echo "<div class='row'><div class='col-md-1'>IDENTIFIANT</div><div class='col-md-2'>PUBLIQUE</div><div class='col-md-1'>SEMESTRE</div><div class='col-md-3'>LIBELLE</div><div class='col-md-1'>NOM</div><div class='col-md-2'>PRENOM</div><div class='col-md-1'>STATUT</div></div>";
-				foreach($modulesEnseignants as $moduleEnseignant){
-					//echo "<tr class='module' id='".$moduleEnseignant['ident']."'><td>".$moduleEnseignant['ident']."</td><td>".$moduleEnseignant['public']."</td><td>".$moduleEnseignant['semestre']."</td><td>".$moduleEnseignant['libelle']."</td><td>".$moduleEnseignant['nom']."</td><td>".$moduleEnseignant['prenom']."</td><td>".$moduleEnseignant['statut']."</td></tr><tr id='div_".$moduleEnseignant['ident']."'></tr>";
-					echo "<div class='row module' id='".$moduleEnseignant['ident']."'>
+			$i = 0;
+			echo "<div class='col-md-6'>";
+			for($i = 0; $i < count($modulesEnseignants) ; $i ++){
+				if($i%2 == 0){
+					echo "<div class='row module' id='".$modulesEnseignants[$i]['ident']."'>
 									<div class='modulebox_header'>
-										<p>".$moduleEnseignant['ident']."</p>
-										<p class='public_text'>".$moduleEnseignant['public']."</p>
-										<p>".$moduleEnseignant['semestre']."</p>
+										<p>".$modulesEnseignants[$i]['ident']."</p>
+										<p class='public_text'>".$modulesEnseignants[$i]['public']."</p>
+										<p>".$modulesEnseignants[$i]['semestre']."</p>
 									</div>
 									<div class='modulebox_containt'>
-										<p>".$moduleEnseignant['libelle']."</p>
-									</div>
-									<div class='modulebox_footer'>";
-										if($moduleEnseignant['nom'] != null){
-											echo '<a class="btn btn-primary module_btn" data-toggle="collapse" href="http://localhost/Projet/index.php/'.$moduleEnseignant['nom'].'"
-															aria-expanded="false" aria-controls="collapseExample">'.$moduleEnseignant['nom'].' 	'.$moduleEnseignant['prenom'].'</a>';
-											echo '<a class="btn btn-primary module_btn" data-toggle="collapse" href="http://localhost/Projet/index.php/'.$moduleEnseignant['nom'].'"
-															aria-expanded="false" aria-controls="collapseExample">'.$moduleEnseignant['nom'].' 	'.$moduleEnseignant['prenom'].'</a>';
-											echo '<a class="btn btn-primary module_btn" data-toggle="collapse" href="http://localhost/Projet/index.php/'.$moduleEnseignant['nom'].'"
-															aria-expanded="false" aria-controls="collapseExample">'.$moduleEnseignant['nom'].' 	'.$moduleEnseignant['prenom'].'</a>';
-											echo '<a class="btn btn-primary module_btn" data-toggle="collapse" href="http://localhost/Projet/index.php/'.$moduleEnseignant['nom'].'"
-															aria-expanded="false" aria-controls="collapseExample">'.$moduleEnseignant['nom'].' 	'.$moduleEnseignant['prenom'].'</a>';
-											echo '<a class="btn btn-primary module_btn" data-toggle="collapse" href="http://localhost/Projet/index.php/'.$moduleEnseignant['nom'].'"
-															aria-expanded="false" aria-controls="collapseExample">'.$moduleEnseignant['nom'].' 	'.$moduleEnseignant['prenom'].'</a>';
+										<p>".$modulesEnseignants[$i]['libelle']."</p>";
+									if(isset($admin) && $admin == true){
+										echo "<a  href='#' class='btn btn-danger ajouter_partie' href=''>Ajouter une partie</a>";
+									}
+									echo "</div>
+									<div class='modulebox_footer'>
+									<table cellspacing='10px'>";
+
+									foreach ($modulesEnseignants[$i]["contenu"] as $contenu) {
+										if(!empty($contenu["nom"])){
+											echo "<tr><td><label>".$contenu["partie"]." : &nbsp;</label></td>";
+											echo '<td><a class="btn btn-default module_btn" href="http://localhost/Projet/index.php/enseignant/'.$contenu['login'].'"
+															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-warning"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
 
 										}
-					echo "	</div>
+										else{
+											echo "<tr><td><label>".$contenu["partie"]." : &nbsp;</label></td>";
+											echo '<td><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-success module_btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Reservez cette partie</a></td></tr>';
+										}
+										//echo "<br/><br/>";
+									}
+					echo "	</table></div>
 								</div>";
+				}
+				
+			}
+			echo "</div>";
+
+			echo "<div class='col-md-6'>";
+			for($i = 0; $i < count($modulesEnseignants) ; $i ++){
+				if($i%2 == 1){
+					echo "<div class='row module' id='".$modulesEnseignants[$i]['ident']."'>
+									<div class='modulebox_header'>
+										<p>".$modulesEnseignants[$i]['ident']."</p>
+										<p class='public_text'>".$modulesEnseignants[$i]['public']."</p>
+										<p>".$modulesEnseignants[$i]['semestre']."</p>
+									</div>
+									<div class='modulebox_containt'>
+										<p>".$modulesEnseignants[$i]['libelle']."</p>";
+									if(isset($admin) && $admin == true){
+										echo "<a href='#' class='btn btn-danger ajouter_partie' href=''>Ajouter une partie</a>";
+									}
+									echo "</div>
+									<div class='modulebox_footer'>
+									<table cellspacing='10px'>";
+									foreach ($modulesEnseignants[$i]["contenu"] as $contenu) {
+										if(!empty($contenu["nom"])){
+											echo "<tr><td><label>".$contenu["partie"]." : &nbsp;</label></td>";
+											echo '<td><a class="btn btn-default module_btn" href="http://localhost/Projet/index.php/enseignant/'.$contenu['login'].'"
+															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-warning"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
+										}
+										else{
+											echo "<tr><td><label>".$contenu["partie"]." : &nbsp;</label></td>";
+											echo '<td><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-success module_btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Reservez cette partie</a></td></tr>';
+										}
+										//echo "<br/><br/>";
+									}
+					echo "	</table></div>
+								</div>";
+				}
+			}
+			echo "</div>";
+				/*foreach($modulesEnseignants as $moduleEnseignant){
+					//echo "<tr class='module' id='".$moduleEnseignant['ident']."'><td>".$moduleEnseignant['ident']."</td><td>"
+					.$moduleEnseignant['public']."</td><td>".$moduleEnseignant['semestre']."</td><td>".$moduleEnseignant['libelle'].
+					"</td><td>".$moduleEnseignant['nom']."</td><td>".$moduleEnseignant['prenom']."</td><td>".$moduleEnseignant['statut']
+					."</td></tr><tr id='div_".$moduleEnseignant['ident']."'></tr>";
+					
 
 				}
-				//echo "</table>"
+				//echo "</table>"*/
 			?>
 
 		</article>
@@ -127,7 +187,7 @@
 </section>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$(".module").click(function(){
+		/*$(".module").click(function(){
 			var id = $(this).attr("id");
 			if($("#div_" + id).html() == ""){
 				var url = "tous_les_cours/get_info_cours?module=" + id;
@@ -137,7 +197,25 @@
 				$("#div_" + id).html("");
 			}
 
+		});*/
+		$(".ajouter_partie").click(function(){
+			var id = $(this).parent().parent().attr("id");
+			console.log(id);
+			$(this).html("Confirmer");
+			$(this).removeClass('ajouter_partie');
+			$(this).addClass('confirmer_ajout');
+			$(this).parent().html($(this).parent().html() + "<div style='margin-left:20px'><br/><br/><label for='title'>Nom&nbsp;</label><input type='text' name='nom'><br/><label for='title'>Type&nbsp;</label><select name='type'><option value='CM'>CM</option><option value='TD'>TD</option><option value='TP'>TP</option></select><br/><label for='title'>Nombre d'heure&nbsp;</label><input type='number' name='nb_heure'><br/></div>");
+
+			$(".confirmer_ajout").click(function(){
+				console.log("test");
+				var name = $(this).parent().children().children('input[name=\'nom\']').val();
+				var type = $(this).parent().children().children('select[name=\'type\']').val();
+				var nb_heure = $(this).parent().children().children('input[name=\'nb_heure\']').val();
+				window.location = "tous_les_cours/addPartie?module=" + id + "&name=" + name + "&type=" + type + "&nb_heure=" + nb_heure;
+			});
 		});
+
+
 	});
 </script>
 </body>

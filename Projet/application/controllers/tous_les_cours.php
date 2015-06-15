@@ -19,12 +19,15 @@ class Tous_les_cours extends MY_MainController {
 
         $this->load->model("module");
         $array["modulesEnseignants"] =  $this->module->selectTousLesModulesAvecInfosEnseignant();    
-        
+        for($i = 0; $i < count($array["modulesEnseignants"]); $i ++){
+            $array["modulesEnseignants"][$i]["contenu"] = $this->contenu->selectCoursEnFctModule($array["modulesEnseignants"][$i]["ident"]);
+        }
         $this->load->helper(array('form'));
         $this->load->view('tous_les_cours.php',$array);
 	}
 
     public function get_info_cours(){
+        $this->filter_access();
         $module = $_GET['module'];
         //$partie = $_GET['partie'];
         $this->load->model("contenu");        
@@ -41,4 +44,39 @@ class Tous_les_cours extends MY_MainController {
         $this->load->helper(array('form'));
         $this->load->view('pop_up_cours.php',$array);
     }
+
+    public function addPartie(){
+        $this->filter_access();
+        $module = $_GET['module'];
+        $name = $_GET['name'];
+        $type = $_GET['type'];
+        $nb_heure = $_GET['nb_heure'];
+        $this->load->model("contenu");        
+        $this->contenu->ajoutContenu($module,$name,$type,$nb_heure);
+        $this->load->helper('url');
+        redirect("/tous_les_cours");
+    }
+
+    public function ReserveCours(){
+        $this->filter_access();
+        $module = $_GET["module"];
+        $partie = $_GET["partie"];
+        $this->load->model("contenu");    
+        $this->contenu->addProfContenu($module,$partie,$_SESSION["login"]);
+        $this->load->helper('url');
+        redirect("/tous_les_cours");
+    }
+
+    public function RemoveProf(){
+        $this->filter_access(true);
+        $module = $_GET["module"];
+        $partie = $_GET["partie"];
+        $this->load->model("contenu");    
+        $this->contenu->RemoveProfContenu($module,$partie);
+        $this->load->helper('url');
+        redirect("/tous_les_cours");
+    }
+
+
+
 }

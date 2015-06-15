@@ -10,7 +10,7 @@
 	    //----------SELECT----------
 
 	    function selectCoursEnFctModule($module){
-	    	$sql = "SELECT * FROM contenu WHERE module = ?";
+	    	$sql = "SELECT * FROM contenu left join enseignant on enseignant=login WHERE module = ?;";
 			return $this->db->query($sql, array($module))->result_array();
 	    }
 
@@ -86,9 +86,19 @@
 		}
 
 		//-----------AJOUT-----------
-		function ajoutContenu($module, $partie, $type, $hed, $enseignant){
+		function ajoutContenu($module, $partie, $type, $hed, $enseignant = null){
 			$sql = "INSERT INTO contenu VALUES(?, ?, ?, ?, ?)";
 			$this->db->query($sql, array($module, $partie, $type, $hed, $enseignant));
+		}
+
+		function addProfContenu($module, $partie, $enseignant){
+			$sql = "UPDATE contenu SET enseignant = ? WHERE module = ? AND partie = ?";
+			$this->db->query($sql, array($enseignant, $module, $partie));
+		}
+
+		function RemoveProfContenu($module, $partie){
+			$sql = "UPDATE contenu SET enseignant = NULL WHERE module = ? AND partie = ?";
+			$this->db->query($sql, array($module, $partie));
 		}
 
 		//-----------CHECK-----------
