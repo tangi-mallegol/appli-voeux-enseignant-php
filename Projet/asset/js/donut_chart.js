@@ -19,8 +19,8 @@ function drawDonutChart(labelList, valueList){
   svg.append("g")
     .attr("class", "lines");
 
-  var width = 800,
-      height = 375,
+  var width = 720,
+      height = 337.5,
     radius = Math.min(width, height) / 2;
 
   var pie = d3.layout.pie()
