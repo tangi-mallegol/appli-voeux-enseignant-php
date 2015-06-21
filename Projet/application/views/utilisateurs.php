@@ -162,7 +162,8 @@
 								<div class="userbox_hiddeninfo userbox_login">'.$enseignant['login'].'</div>
 								<p class="userbox_textinfo containt_textinfo userbox_statut">'.$enseignant['statut'].'</p>
 								<p class="userbox_textinfo containt_textinfo">'.$enseignant['nb_heure'].'/'.$enseignant['statutaire'].'</p>';
-
+						echo '<input type="hidden" name="input_actif" value="'.$enseignant["actif"].'"/>';
+						echo '<input type="hidden" name="input_admin" value="'.$enseignant["administrateur"].'"/>';
 						if($enseignant["administrateur"] == 1){
 							//echo '<td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>';
 							echo '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>';
@@ -198,7 +199,24 @@
     	});
 		$("#create").click(function(){
 			$("#form_enseignant").removeClass('hidden');
-			$("#form_enseignant").html('<form action="utilisateurs/creer" method="post" accept-charset="utf-8" class="form-horizontal"><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="nom" placeholder="Nom" name="nom"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="login" placeholder="Identifiant" name="login"></div></div><div class="form-group"><div class="col-sm-10"><input type="password" class="form-control" id="password" placeholder="Mot de passe" name="password"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="statut" placeholder="statut" name="statut"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="statutaire" placeholder="Statutaire" name="statutaire"></div></div><div class="form-group"><div class=" col-sm-10"><div class="checkbox"><label><input type="checkbox" name="admin"> Administrateur</label></div></div></div><div class="form-group"><div class="col-sm-10"><button type="submit" class="btn btn-default">Soumettre</button></div></div></form>');
+			$("#form_enseignant").html('<form action="utilisateurs/creer" method="post" accept-charset="utf-8" class="form-horizontal">' +
+				'<div class="form-group"><div class="col-sm-10">' +
+				'<input type="text" class="form-control" id="nom" placeholder="Nom" name="nom"></div></div>' +
+				'<div class="form-group"><div class="col-sm-10">' +
+				'<input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom"></div></div>' +
+				'<div class="form-group"><div class="col-sm-10">' +
+				'<input type="text" class="form-control" id="login" placeholder="Identifiant" name="login"></div></div>' +
+				'<div class="form-group"><div class="col-sm-10">' +
+				'<input type="password" class="form-control" id="password" placeholder="Mot de passe" name="password"></div></div>' +
+				'<div class="form-group"><div class="col-sm-10">' +
+				'<input type="text" class="form-control" id="statut" placeholder="statut" name="statut"></div></div>' +
+				'<div class="form-group"><div class="col-sm-10">' +
+				'<input type="text" class="form-control" id="statutaire" placeholder="Statutaire" name="statutaire"></div></div>' +
+				'<div class="form-group"><div class=" col-sm-10">' +
+				'<div class="checkbox"><label><input type="checkbox" name="admin"> Administrateur</label></div>' +
+				'<div class="checkbox"><label><input type="checkbox" name="actif"> Actif</label></div>' +
+				'</div></div>' +
+				'<div class="form-group"><div class="col-sm-10"><button type="submit" class="btn btn-default">Soumettre</button></div></div></form>');
 		});
 		$("#delete").click(function(){
 			window.location = "/utilisateurs/delete?login=" + $("input[name='login']").val();
@@ -214,8 +232,20 @@
 			var prenom = _this.find('.userbox_name').text();
 			var login = _this.find('.userbox_login').text();
 			var statut = _this.find('.userbox_statut').text();
-			var admin = _this.find('.glyphicon-ok').length == 0 ? "" : "checked";
-			$("#form_enseignant").html('<form action="utilisateurs/modifier" method="post" accept-charset="utf-8" class="form-horizontal" id="form_modifier"><input type="hidden" name="login" value="' + login +'"><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="nom" placeholder="Nom" name="nom" value="' + nom +'"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom" value="' + prenom +'"></div></div><div class="form-group"><div class="col-sm-10"><input type="text" class="form-control" id="statut" placeholder="Statut" name="statut" value="' + statut + '"></div></div><div class="form-group"><div class=" col-sm-10"><div class="checkbox"><label><input type="checkbox" name="admin" ' + admin +'> Administrateur</label></div></div></div><div class="form-group"><div class="col-sm-10"><button type="submit" class="btn btn-default">Soumettre</button></div></div></form>');
+			var admin = _this.find('input[name="input_admin"]').val() == 0 ? "" : "checked";
+			var actif = _this.find('input[name="input_actif"]').val() == 0 ? "" : "checked";
+			$("#form_enseignant").html('<form action="utilisateurs/modifier" method="post" accept-charset="utf-8" class="form-horizontal" id="form_modifier">' +
+				'<input type="hidden" name="login" value="' + login +'"><div class="form-group"><div class="col-sm-10">' +
+				'<input type="text" class="form-control" id="nom" placeholder="Nom" name="nom" value="' + nom +'"></div></div>' +
+				'<div class="form-group"><div class="col-sm-10">' +
+				'<input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom" value="' + prenom +'"></div></div>' +
+				'<div class="form-group"><div class="col-sm-10">' +
+				'<input type="text" class="form-control" id="statut" placeholder="Statut" name="statut" value="' + statut + '"></div></div>' +
+				'<div class="form-group"><div class=" col-sm-10">' +
+				'<div class="checkbox"><label><input type="checkbox" name="admin" ' + admin +'> Administrateur</label></div>' +
+				'<div class="checkbox"><label><input type="checkbox" name="actif" ' + actif +'> Actif</label></div></div>' +
+				'</div><div class="form-group"><div class="col-sm-10">' +
+				'<button type="submit" class="btn btn-default">Soumettre</button></div></div></form>');
 		};
 	</script>
 </body>

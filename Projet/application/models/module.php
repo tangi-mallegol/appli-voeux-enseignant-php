@@ -17,5 +17,16 @@
 			$sql = "select ident, public, semestre, libelle, nom, prenom, statut from module left join enseignant on responsable=login";
 			return $this->db->query($sql)->result_array();
 		}
+
+		function addModule($ident, $public, $semestre, $titre){
+			$sql = "select * from module where ident = '$ident'";
+			$result = $this->db->query($sql)->result_array();
+			if(count($result) == 0){
+				$sql = "insert into module values ('$ident','$public','$semestre','$titre',null)";
+				return $this->db->query($sql);
+			}else{
+				return array("erreur" => true, "message" => "Cet identifiant de module existe déjà !");
+			}
+		}
 	}
 ?>

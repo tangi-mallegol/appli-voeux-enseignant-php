@@ -78,9 +78,54 @@
 	require_once("navbar.php");
 	showNavbar($admin);
 ?>
+
 <section class="row">
 	<div class="container">
+
 		<article class="col-lg-12">
+		<?php
+			if(isset($erreur)){
+				echo '<div class="alert alert-danger" role="alert">'.$erreur["message"].'</div>';
+			}
+			echo "<div class='col-lg-9' style='margin-bottom:20px'>";
+			if(isset($admin) && $admin == true){
+				echo "
+				<button id='buton_add_module' class='btn btn-primary'>Ajouter un module</button>";
+			}
+			echo "<a href='/tous_les_cours/ExportContenu' class='btn btn-success'>Export .csv</a></div>"
+
+		?>
+		<div class='col-lg-9' style='margin-bottom:20px;' id='add_module'>
+
+			<h3>Ajout de Module</h3>
+			<form action="/tous_les_cours/createmodule" method="get" accept-charset="utf-8">
+			<div class='form-group'>
+			<label for="title">Libelle du module</label>
+				<input class='form-control' type="text" name="titre" value="" placeholder="Nom">
+			</div>
+			
+			<div class='form-group'>
+				<label for="title">Identifiant du module</label>
+				<input class='form-control' type="text" name="ident" value="" placeholder="Identifiant">
+			</div>
+			
+			<div class='form-group'>
+				<label for="title">Public</label>
+				<input class='form-control' type="text" name="public" value="" placeholder="Public">
+			</div>
+			
+			<div class='form-group'>
+			<label for="Title">Selestre</label>
+				<select name="semestre" class="form-control">
+					<option value="S1">Semestre 1</option>
+					<option value="S2">Semestre 2</option>
+				</select>
+			</div>
+
+			<button type="submit" class="btn btn-default">Valider</button>
+		</form>
+		</div>
+		
 			<?php
 				//Accès au tableau TP via : $TP
 				//Accès au tableau TD via : $TD
@@ -98,6 +143,7 @@
 				//echo "<table>";
 				//echo "<tr><th>Identifiant</th><th>Publique</th><th>Semestre</th><th>Libellé</th><th>Nom du responsable</th><th>Prénom du responsable</th><th>Statut du responsable</th></tr>";
 				//echo "<div class='row'><div class='col-md-1'>IDENTIFIANT</div><div class='col-md-2'>PUBLIQUE</div><div class='col-md-1'>SEMESTRE</div><div class='col-md-3'>LIBELLE</div><div class='col-md-1'>NOM</div><div class='col-md-2'>PRENOM</div><div class='col-md-1'>STATUT</div></div>";
+
 			$i = 0;
 			echo "<div class='col-md-6'>";
 			for($i = 0; $i < count($modulesEnseignants) ; $i ++){
@@ -111,7 +157,7 @@
 									<div class='modulebox_containt'>
 										<p>".$modulesEnseignants[$i]['libelle']."</p>";
 									if(isset($admin) && $admin == true){
-										echo "<a  href='#' class='btn btn-danger ajouter_partie' href=''>Ajouter une partie</a>";
+										echo "<button class='btn btn-danger ajouter_partie' href=''>Ajouter une partie</button>";
 									}
 									echo "</div>
 									<div class='modulebox_footer'>
@@ -119,13 +165,13 @@
 
 									foreach ($modulesEnseignants[$i]["contenu"] as $contenu) {
 										if(!empty($contenu["nom"])){
-											echo "<tr><td><label>".$contenu["partie"]." : &nbsp;</label></td>";
+											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 											echo '<td><a class="btn btn-default module_btn" href="http://localhost/Projet/index.php/enseignant/'.$contenu['login'].'"
 															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-warning"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
 
 										}
 										else{
-											echo "<tr><td><label>".$contenu["partie"]." : &nbsp;</label></td>";
+											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 											echo '<td><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-success module_btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Reservez cette partie</a></td></tr>';
 										}
 										//echo "<br/><br/>";
@@ -149,19 +195,19 @@
 									<div class='modulebox_containt'>
 										<p>".$modulesEnseignants[$i]['libelle']."</p>";
 									if(isset($admin) && $admin == true){
-										echo "<a href='#' class='btn btn-danger ajouter_partie' href=''>Ajouter une partie</a>";
+										echo "<button class='btn btn-danger ajouter_partie' href=''>Ajouter une partie</button>";
 									}
 									echo "</div>
 									<div class='modulebox_footer'>
 									<table cellspacing='10px'>";
 									foreach ($modulesEnseignants[$i]["contenu"] as $contenu) {
 										if(!empty($contenu["nom"])){
-											echo "<tr><td><label>".$contenu["partie"]." : &nbsp;</label></td>";
+											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 											echo '<td><a class="btn btn-default module_btn" href="http://localhost/Projet/index.php/enseignant/'.$contenu['login'].'"
 															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-warning"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
 										}
 										else{
-											echo "<tr><td><label>".$contenu["partie"]." : &nbsp;</label></td>";
+											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 											echo '<td><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-success module_btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Reservez cette partie</a></td></tr>';
 										}
 										//echo "<br/><br/>";
@@ -187,6 +233,11 @@
 </section>
 <script type="text/javascript">
 	$(document).ready(function(){
+		$("#add_module").hide();
+		$("#buton_add_module").click(function(){
+			$("#add_module").show(200);
+			$("#buton_add_module").hide();
+		});
 		/*$(".module").click(function(){
 			var id = $(this).attr("id");
 			if($("#div_" + id).html() == ""){

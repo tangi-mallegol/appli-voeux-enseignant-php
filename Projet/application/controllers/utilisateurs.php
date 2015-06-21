@@ -54,11 +54,13 @@ class Utilisateurs extends MY_MainController {
         $login = $_POST["login"];
         $password = $_POST["password"];
         $statut = $_POST["statut"];
+
         try{
             $statutaire = intval($_POST["statutaire"]);
+            $actif = isset($_POST["actif"]) ? 1 : 0;
             $admin = isset($_POST["admin"]) ? 1 : 0;
             $this->load->model("user");
-            $result = $this->user->createUser($login,$password,$nom,$prenom,$statut,$statutaire,$admin);
+            $result = $this->user->createUser($login,$password,$nom,$prenom,$statut,$statutaire,$admin,$actif);
             $erreur = $result == false ? true : false;
             if($erreur)
                 $_SESSION["erreur"] = $erreur;
@@ -78,13 +80,14 @@ class Utilisateurs extends MY_MainController {
         $login = $_POST["login"];
         $statut = $_POST["statut"];
         $admin = isset($_POST["admin"]) ? 1 : 0;
+        $actif = isset($_POST["actif"]) ? 1 : 0;
         $this->load->model("user");
         $array["nom"] = $nom;
         $array["prenom"] = $prenom;
         $array["login"] = $login;
         $array["statut"] = $statut;
         $array["admin"] = $admin;
-        $result = $this->user->setUser($login,$nom,$prenom,$statut,$admin);
+        $result = $this->user->setUser($login,$nom,$prenom,$statut,$admin,$actif);
         $erreur = $result == false ? true : false;
         if($erreur)
             $_SESSION["erreur"] = $erreur;

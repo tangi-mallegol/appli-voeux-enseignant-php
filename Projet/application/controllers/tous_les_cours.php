@@ -16,7 +16,10 @@ class Tous_les_cours extends MY_MainController {
         $array["TP_null"] =  $this->contenu->selectTPSansEnseignant();
         $array["TD_null"] =  $this->contenu->selectTDSansEnseignant();
         $array["CM_null"] =  $this->contenu->selectCMSansEnseignant();
-
+        if(isset($_SESSION['erreur'])){
+            $array['erreur'] = $_SESSION['erreur'];
+            unset($_SESSION['erreur']);
+        }
         $this->load->model("module");
         $array["modulesEnseignants"] =  $this->module->selectTousLesModulesAvecInfosEnseignant();    
         for($i = 0; $i < count($array["modulesEnseignants"]); $i ++){
@@ -44,16 +47,31 @@ class Tous_les_cours extends MY_MainController {
         $this->load->helper(array('form'));
         $this->load->view('pop_up_cours.php',$array);
     }
+    public function CreateModule(){
+        $this->filter_access(true);
+        $titre = $_GET['titre'];
+        $ident = $_GET['ident'];
+        $public = $_GET['public'];
+        $semestre = $_GET['semestre'];
+        $this->load->model("module");        
+        $result = $this->module->addModule($ident,$public,$semestre,$titre);
+        $this->load->helper('url');
+        if(isset($result['erreur']) && $result['erreur'] == true)
+            $_SESSION['erreur'] = $result;
+        redirect("/tous_les_cours");
+    }
 
     public function addPartie(){
-        $this->filter_access();
+        $this->filter_access(true);
         $module = $_GET['module'];
         $name = $_GET['name'];
         $type = $_GET['type'];
         $nb_heure = $_GET['nb_heure'];
         $this->load->model("contenu");        
-        $this->contenu->ajoutContenu($module,$name,$type,$nb_heure);
+        $result = $this->contenu->ajoutContenu($module,$name,$type,$nb_heure);
         $this->load->helper('url');
+        if(isset($result['erreur']) && $result['erreur'] == true)
+            $_SESSION['erreur'] = $result;
         redirect("/tous_les_cours");
     }
 
@@ -62,8 +80,10 @@ class Tous_les_cours extends MY_MainController {
         $module = $_GET["module"];
         $partie = $_GET["partie"];
         $this->load->model("contenu");    
-        $this->contenu->addProfContenu($module,$partie,$_SESSION["login"]);
+        $result = $this->contenu->addProfContenu($module,$partie,$_SESSION["login"]);
         $this->load->helper('url');
+        if(isset($result['erreur']) && $result['erreur'] == true)
+            $_SESSION['erreur'] = $result;
         redirect("/tous_les_cours");
     }
 
@@ -77,6 +97,15 @@ class Tous_les_cours extends MY_MainController {
         redirect("/tous_les_cours");
     }
 
-
+    public function ExportContenu(){
+        $this->load->model("contenu");  
+        $this->load->dbutil();
+        $this->load->helper('file');
+        $this->load->helper('download');
+        $delimiter = ";";
+        $newline = "\r\n";
+        $data = $this->dbutil->csv_from_result($this->contenu->ExportContenu(), $delimiter, $newline);
+        force_download("TousLesCours.csv", $data);
+    }
 
 }
