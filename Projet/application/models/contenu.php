@@ -44,25 +44,34 @@
 			return $this->db->query($sql, array('CM'))->result_array();
 		}
 
+		function selectTousLesProjets(){
+			$sql = "SELECT * FROM contenu WHERE type = ?";
+			return $this->db->query($sql, array('Projet'))->result_array();
+		}
+
 		function selectCours($login = null){
-			$sql = "SELECT * FROM contenu WHERE enseignant  = ?";
-			return $this->db->query($sql, array($login))->result_array();
+			$sql = "SELECT * FROM contenu, module WHERE contenu.enseignant  = ?";
+			return $this->db->query($sql, array($login, $login))->result_array();
 		}
 
 		function selectTP($login = null){
-			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant = ?";
+			$sql = "SELECT * FROM contenu, module WHERE contenu.type = ? AND contenu.enseignant  = ?";
 			return $this->db->query($sql, array('TP', $login))->result_array();
 		}
 
 		function selectTD($login = null){
-			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant  = ?";
+			$sql = "SELECT * FROM contenu, module WHERE contenu.type = ? AND contenu.enseignant  = ?";
 			return $this->db->query($sql, array('TD', $login))->result_array();
-			
 		}
 
 		function selectCM($login = null){
-			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant  = ?";
+			$sql = "SELECT * FROM contenu, module WHERE contenu.type = ? AND contenu.enseignant  = ?";
 			return $this->db->query($sql, array('CM', $login))->result_array();
+		}
+
+		function selectProjet($login = null){
+			$sql = "SELECT * FROM contenu, module WHERE contenu.type = ? AND contenu.enseignant  = ?";
+			return $this->db->query($sql, array('Projet', $login))->result_array();
 		}
 
 		function selectCoursSansEnseignant(){
@@ -83,6 +92,11 @@
 		function selectCMSansEnseignant(){
 			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant IS NULL";
 			return $this->db->query($sql, array('CM', null))->result_array();
+		}
+
+		function selectProjetSansEnseignant(){
+			$sql = "SELECT * FROM contenu WHERE type = ? AND enseignant IS NULL";
+			return $this->db->query($sql, array('Projet', null))->result_array();
 		}
 
 		//-----------AJOUT-----------
