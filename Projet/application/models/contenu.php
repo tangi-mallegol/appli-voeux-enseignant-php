@@ -101,25 +101,51 @@
 
 		//-----------AJOUT-----------
 		function ajoutContenu($module, $partie, $type, $hed, $enseignant = null){
-			$sql = "SELECT * FROM contenu WHERE module = '$module' AND partie = '$partie'";
-			$result = $this->db->query($sql)->result_array();
-			if(count($result) != 0){
-				return array("erreur" => true, "message" => "Ce module existe déjà !");
-			}else{
-				$sql = "INSERT INTO contenu VALUES(?, ?, ?, ?, ?)";
-				$this->db->query($sql, array($module, $partie, $type, $hed, $enseignant));
-			}
+ 			$sql = "SELECT * FROM contenu WHERE module = '$module' AND partie = '$partie'";
+ 			$result = $this->db->query($sql)->result_array();
+ 			if(count($result) != 0){
+ 				return array("erreur" => true, "message" => "Ce module existe déjà !");
+ 			}else{
+ 				$sql = "INSERT INTO contenu VALUES(?, ?, ?, ?, ?)";
+ 				$result = $this->db->query($sql, array($module, $partie, $type, $hed, $enseignant));
+ 				if(!result)
+ 					return array("erreur" => true, "message" => "Erreur lors de l'ajout du contenu.");
+ 			}
+		}
+
+		function GetNbHeureLibreProf($login){
+			$sql = "SELECT enseignant.statutaire - decharge.decharge - SUM(contenu.hed) AS heure_restante,  decharge.decharge FROM decharge, enseignant, contenu WHERE contenu.enseignant = '$enseignant' && decharge.enseignant = 'vth$enseignantion' AND enseignant.login = '$enseignant'";
+			return $this->db->query($sql)->result_array();
 		}
 
 		function addProfContenu($module, $partie, $enseignant){
 			$sql = "SELECT * FROM contenu WHERE enseignant = '$enseignant' AND module = '$module' AND partie = '$partie'";
 			$result = $this->db->query($sql)->result_array();
 			if(count($result) == 0){
+				$result = GetNbHeureLibreProf($login)
+				//On a le prof qui est au dela de ses heures possible et comme il a une decharge, on lui refuse de prendre le cours
+				if($result['heure_restante'] < 0 && $result['decharge'] > 0)
+					return array("erreur" => true, "message" => "Impossible d'ajouter cet enseignant à ce contenu car il dépasserai son nombre d'heure autorisé. Pour plus d'informations, contactez un administrateur.");
 				$sql = "UPDATE contenu SET enseignant = ? WHERE module = ? AND partie = ?";
-				$this->db->query($sql, array($enseignant, $module, $partie));	
+				$result = $this->db->query($sql, array($enseignant, $module, $partie));	
+				if(!$result)
+					return array("erreur" => true, "message" => "Une erreur est survenu lors de l'assignation de cette partie à ce professeur, veuillez réessayer. Pour plus d'informations, contactez l'administrateur.");
 			}else{
 				return array("erreur" => true, "message" => "Un professeur est déjà assigné à ce module, contacter l'administrateur pour régler le problème.");
 			}
+		}
+
+		function removeContenu($module, $partie){
+ 			$sql = "SELECT * FROM contenu WHERE module = '$module' AND partie = '$partie'";
+ 			$result = $this->db->query($sql)->result_array();
+ 			if(count($result) != 0){
+ 				return array("erreur" => true, "message" => "Ce module n'existe pas !");
+ 			}else{
+ 				$sql = "DELETE FROM contenu WHERE module = '$module' AND partie = '$partie'";
+ 				$result = $this->db->query($sql, array($module, $partie, $type, $hed, $enseignant));
+ 				if(!result)
+ 					return array("erreur" => true, "message" => "Erreur lors de la suppression du contenu.");
+ 			}
 		}
 
 		function RemoveProfContenu($module, $partie){
@@ -138,9 +164,12 @@
 
 		//----------EXPORT CSV---------
 
-		function ExportContenu(){
+		function ExportContenu($login = null){
 			$this->load->helper('csv');
-			return $this->db->query("SELECT module.ident as Identifiant, module.libelle as Libellé, module.semestre as Semestre, contenu.partie as Partie, contenu.hed as 'Heure(s) équivalent TD' FROM contenu NATURAL JOIN module WHERE contenu.module = module.ident ORDER BY module.ident, contenu.type, contenu.partie");
+			if($login != null)
+				return $this->db->query("SELECT module.ident as Identifiant, module.libelle as Libellé, module.semestre as Semestre, contenu.partie as Partie, contenu.hed as 'Heure(s) équivalent TD' FROM contenu NATURAL JOIN module WHERE contenu.module = module.ident && contenu.enseignant = $login ORDER BY module.ident, contenu.type, contenu.partie");
+			else
+				return $this->db->query("SELECT module.ident as Identifiant, module.libelle as Libellé, module.semestre as Semestre, contenu.partie as Partie, contenu.hed as 'Heure(s) équivalent TD' FROM contenu NATURAL JOIN module WHERE contenu.module = module.ident ORDER BY module.ident, contenu.type, contenu.partie");
 		}
 		
 	}

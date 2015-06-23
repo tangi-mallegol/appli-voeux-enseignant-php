@@ -61,6 +61,20 @@ class Tous_les_cours extends MY_MainController {
         redirect("/tous_les_cours");
     }
 
+    public function removeModule(){
+        $this->filter_access(true);
+        $titre = $_GET['titre'];
+        $ident = $_GET['ident'];
+        $public = $_GET['public'];
+        $semestre = $_GET['semestre'];
+        $this->load->model("module");        
+        $result = $this->module->removeModule($ident);
+        $this->load->helper('url');
+        if(isset($result['erreur']) && $result['erreur'] == true)
+            $_SESSION['erreur'] = $result;
+        redirect("/tous_les_cours");
+    }
+
     public function addPartie(){
         $this->filter_access(true);
         $module = $_GET['module'];
@@ -75,12 +89,33 @@ class Tous_les_cours extends MY_MainController {
         redirect("/tous_les_cours");
     }
 
-    public function ReserveCours(){
-        $this->filter_access();
+    public function removePartie(){
+        $this->filter_access(true);
+        $module = $_GET['module'];
+        $name = $_GET['name'];
+        $nb_heure = $_GET['nb_heure'];
+        $this->load->model("contenu");        
+        $result = $this->contenu->removeContenu($module,$name,$type,$nb_heure);
+        $this->load->helper('url');
+        if(isset($result['erreur']) && $result['erreur'] == true)
+            $_SESSION['erreur'] = $result;
+        redirect("/tous_les_cours");
+    }
+
+
+    public function ReserveCours($login = null){
+        //Si on passe un login, c'est que c'est l'administrateur qui reserve pour un compte sinon, c'est l'utilisateur lui-même
+        if($login = null)
+            $this->filter_access();
+        else
+            $this->filter_access(true);
         $module = $_GET["module"];
         $partie = $_GET["partie"];
         $this->load->model("contenu");    
-        $result = $this->contenu->addProfContenu($module,$partie,$_SESSION["login"]);
+        if($login != null)
+            $result = $this->contenu->addProfContenu($module,$partie,$login);
+        else
+            $result = $this->contenu->addProfContenu($module,$partie,$_SESSION["login"]);
         $this->load->helper('url');
         if(isset($result['erreur']) && $result['erreur'] == true)
             $_SESSION['erreur'] = $result;

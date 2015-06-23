@@ -29,16 +29,48 @@
 			}
 		}
 
-		function ajoutContenu($module, $partie, $type, $hed, $enseignant = null){
+		function removeModule($ident, $public, $semestre, $titre){
+			$sql = "select * from module where ident = '$ident'";
+			$result = $this->db->query($sql)->result_array();
+			if(count($result) == 0){
+				$sql = "DELETE FROM contenu WHERE module = '$ident'";
+				$result = $this->db->query($sql);
+				if(!$result)
+					return array("erreur" => true, "message" => "Erreur lors de la suppression des parties liées au module !");
+				$sql = "DELETE FROM module WHERE ident = '$ident'";
+				$result = $this->db->query($sql);
+				if(!$result)
+					return array("erreur" => true, "message" => "Erreur lors de la suppression du module !");
+			}else{
+				return array("erreur" => true, "message" => "Cet identifiant de module n'existe pas !");
+			}
+		}
+
+		/*function ajoutContenu($module, $partie, $type, $hed, $enseignant = null){
  			$sql = "SELECT * FROM contenu WHERE module = '$module' AND partie = '$partie'";
  			$result = $this->db->query($sql)->result_array();
  			if(count($result) != 0){
  				return array("erreur" => true, "message" => "Ce module existe déjà !");
  			}else{
  				$sql = "INSERT INTO contenu VALUES(?, ?, ?, ?, ?)";
- 				$this->db->query($sql, array($module, $partie, $type, $hed, $enseignant));
+ 				$result = $this->db->query($sql, array($module, $partie, $type, $hed, $enseignant));
+ 				if(!result)
+ 					return array("erreur" => true, "message" => "Erreur lors de l'ajout du contenu.");
  			}
 		}
+
+		function removeContenu($module, $partie){
+ 			$sql = "SELECT * FROM contenu WHERE module = '$module' AND partie = '$partie'";
+ 			$result = $this->db->query($sql)->result_array();
+ 			if(count($result) != 0){
+ 				return array("erreur" => true, "message" => "Ce module n'existe pas !");
+ 			}else{
+ 				$sql = "DELETE FROM contenu WHERE module = '$module' AND partie = '$partie'";
+ 				$result = $this->db->query($sql, array($module, $partie, $type, $hed, $enseignant));
+ 				if(!result)
+ 					return array("erreur" => true, "message" => "Erreur lors de la suppression du contenu.");
+ 			}
+		}*/
 
 		function ExportContenu(){
  			$this->load->helper('csv');

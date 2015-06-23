@@ -20,4 +20,15 @@ class Mes_cours extends MY_MainController {
         $this->load->helper(array('form'));
         $this->load->view('mes_cours.php',$array);
 	}
+
+	public function ExportContenu(){
+        $this->load->model("contenu");  
+        $this->load->dbutil();
+        $this->load->helper('file');
+        $this->load->helper('download');
+        $delimiter = ";";
+        $newline = "\r\n";
+        $data = $this->dbutil->csv_from_result($this->contenu->ExportContenu($_SESSION['login']), $delimiter, $newline);
+        force_download("TousLesCours.csv", $data);
+    }
 }
