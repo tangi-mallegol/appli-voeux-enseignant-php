@@ -1,4 +1,4 @@
-function drawDonutChart(labelList, valueList){
+function drawDonutChart(labelList, valueList, chartContainer){
 
   var sizeLabelList = labelList.length;
   var sizeValueList = valueList.length;
@@ -8,7 +8,7 @@ function drawDonutChart(labelList, valueList){
     return;
   }
 
-  var svg = d3.select("#ChartCours")
+  var svg = d3.select(chartContainer)
     .append("svg")
     .append("g")
 
@@ -37,7 +37,7 @@ function drawDonutChart(labelList, valueList){
     .innerRadius(radius * 0.9)
     .outerRadius(radius * 0.9);
 
-  svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  svg.attr("transform", "translate(" + width /  2.7 + "," + height / 2 + ")");
 
   var key = function(d){ return d.data.label; };
 

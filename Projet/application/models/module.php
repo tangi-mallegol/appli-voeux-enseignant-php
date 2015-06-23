@@ -8,7 +8,7 @@
 	    }
 
 	    //----------SELECT----------
-	    function selectTousLesModules(){
+	 	function selectTousLesModules(){
 			$sql = "SELECT * FROM module";
 			return $this->db->query($sql)->result_array();
 		}
@@ -17,6 +17,7 @@
 			$sql = "select ident, public, semestre, libelle, nom, prenom, statut from module left join enseignant on responsable=login";
 			return $this->db->query($sql)->result_array();
 		}
+<<<<<<< HEAD
 
 		function addModule($ident, $public, $semestre, $titre){
 			$sql = "select * from module where ident = '$ident'";
@@ -27,6 +28,11 @@
 			}else{
 				return array("erreur" => true, "message" => "Cet identifiant de module existe déjà !");
 			}
+=======
+		function selectModulesLoginAvecInfosEnseignant($login){
+			$sql = "select module, type, hed, public from contenu join module on module=ident where enseignant = ?";
+			return $this->db->query($sql, array($login))->result_array();
+>>>>>>> hadamo
 		}
 	}
 ?>
