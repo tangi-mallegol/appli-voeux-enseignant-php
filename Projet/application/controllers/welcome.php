@@ -11,7 +11,7 @@ class Welcome extends MY_MainController {
         $login = isset($_SESSION["login"]) ? $_SESSION["login"] : null;
         if(isset($login)){
             $this->load->helper('url');
-            redirect("/home");
+            redirect("/mes_cours");
         }
         $this->load->helper(array('form'));
 		$this->load->view('welcome_message',$array);
@@ -27,7 +27,7 @@ class Welcome extends MY_MainController {
                     $_SESSION["login"] = $user["login"];
                     $_SESSION["admin"] = $user["administrateur"];
                     $this->load->helper('url');
-                    redirect("/home");
+                    redirect("/mes_cours");
                 }
                 else
                 {

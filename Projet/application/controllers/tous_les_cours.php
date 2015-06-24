@@ -133,6 +133,7 @@ class Tous_les_cours extends MY_MainController {
     }
 
     public function ExportContenu(){
+        $this->filter_access();
         $this->load->model("contenu");  
         $this->load->dbutil();
         $this->load->helper('file');

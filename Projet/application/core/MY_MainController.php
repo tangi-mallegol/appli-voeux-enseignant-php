@@ -28,13 +28,13 @@ class MY_MainController extends CI_Controller {
     	if($admin_ = true){
     		if(!(isset($admin) && $admin = true)){
     			$this->load->helper('url');
-            	redirect("/home");
+            	redirect("/mes_cours");
     		}
     	}
 		//Si l'utilisateur doit porter un $login particulier (exemple de modification de mot de passe d'un $login)
 		if(isset($login_) && $login_ = $login){
 			$this->load->helper('url');
-        	redirect("/home");
+        	redirect("/mes_cours");
 		}
     }
 }
