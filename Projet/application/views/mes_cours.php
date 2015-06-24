@@ -131,13 +131,13 @@
 					}
 
 					function displayCoursesBox($type, $typeContent, $typeTot){
-						echo'<div class="type_box">';
+						echo'<article class="col-lg-6"><div class="type_box">';
 							echo '<h2>Mes '.$type.'</h2>';
 							if($typeTot > 0)
 								echo $typeContent;
 							else
 								echo "Vous n'avez pas d'heures de ".$type.".";
-						echo'</div>';
+						echo'</div></article>';
 					}
 
 					// Display the CM courses and save the total of cm
