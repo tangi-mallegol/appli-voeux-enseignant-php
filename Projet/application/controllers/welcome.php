@@ -9,11 +9,11 @@ class Welcome extends MY_MainController {
         else 
             $array["erreur"] = "";
         $login = isset($_SESSION["login"]) ? $_SESSION["login"] : null;
+        //On vérifie que l'utilisateur est bien loggué
         if(isset($login)){
             $this->load->helper('url');
             redirect("/mes_cours");
         }
-        $this->load->helper(array('form'));
 		$this->load->view('welcome_message',$array);
 	}
 
@@ -39,12 +39,5 @@ class Welcome extends MY_MainController {
         else {
             $this->index($user);
         }
-    }
-
-    function load_controller($controller, $method = 'index')
-    {
-        require_once(FCPATH . APPPATH . 'controllers/' . $controller . '.php');
-        $controller = new $controller();
-        return $controller->$method();
     }
 }

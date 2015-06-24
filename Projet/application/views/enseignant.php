@@ -61,7 +61,7 @@
 							$content = $content.'<h4>'.$aClass.'</h4>';
 							foreach ($tabSort as $aSort){
 								if($aSort['public'] == $aClass){
-									$content = $content.'<a class="btn btn-primary module_btn" data-toggle="collapse" href="http://localhost/Projet/index.php/'.strtolower($aSort['module']).'"
+									$content = $content.'<a class="btn btn-primary module_btn" data-toggle="collapse" href="/"
 													aria-expanded="false" aria-controls="collapseExample">'.$aSort['ident'].'	: 	'.$aSort['hed'].'h</a>';
 								}
 							}
@@ -83,7 +83,7 @@
 						$content = '';
 						$tabSort =  $sort;
 						foreach ($tabSort as $aSort){
-								$content = $content.'<a class="btn btn-primary module_btn" data-toggle="collapse" href="http://localhost/Projet/index.php/'.strtolower($aSort['module']).'"
+								$content = $content.'<a class="btn btn-primary module_btn" data-toggle="collapse" href="/"
 												aria-expanded="false" aria-controls="collapseExample">'.$aSort['module'].'	: 	'.$aSort['hed'].'h</a>';
 						}
 						return $content;
