@@ -43,6 +43,12 @@
 	<div class="container">
 		<article class="col-lg-12">
 			<article class="col-lg-6">
+				<a class='btn btn-success' href='mes_cours/ExportContenu' >Export .csv</a>
+			</article>
+		</article>
+		<article class="col-lg-12">
+
+			<article class="col-lg-6">
 				<h1>Mes Cours:</h1>
 				<div class="chartSpace" id="ChartCours"></div>
 			</article>

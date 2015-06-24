@@ -30,6 +30,6 @@ class Mes_cours extends MY_MainController {
         $delimiter = ";";
         $newline = "\r\n";
         $data = $this->dbutil->csv_from_result($this->contenu->ExportContenu($_SESSION['login']), $delimiter, $newline);
-        force_download("TousLesCours.csv", $data);
+        force_download("MesCours.csv", $data);
     }
 }
