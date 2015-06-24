@@ -8,11 +8,14 @@
 	    }
 
 		function selectEnseignant($login = null){
-			if($login != null) return $this->db->get_where('enseignant', array('login' => $login, 'supprime' => 0))->result_array();	
-			else return $this->db->get_where('enseignant', array('supprime' => 0))->result_array();
-				
-			/*if($login != null) return $bdd->query('SELECT * FROM enseignant WHERE login = \'$where\'')->fetch();
-			else return $bdd->query('SELECT * FROM enseignant')->fetch();*/
+			if($login != null){
+				//SELECT enseignant.login, enseignant.pwd, enseignant.nom, enseignant.prenom, enseignant.statut, enseignant.statutaire, enseignant.actif, enseignant.administrateur, enseignant.supprime, ifnull(decharge.decharge,0) as decharge FROM enseignant left join decharge on enseignant.login = decharge.enseignant
+				$sql = "SELECT enseignant.login, enseignant.pwd, enseignant.nom, enseignant.prenom, enseignant.statut, enseignant.statutaire, enseignant.actif, enseignant.administrateur, enseignant.supprime, ifnull(decharge.decharge,0) as decharge FROM enseignant left join decharge on enseignant.login = decharge.enseignant WHERE enseignant.login = '$login' AND enseignant.supprime = 0";
+    			return $this->db->query($sql)->result_array();
+			}else{
+				$sql = "SELECT enseignant.login, enseignant.pwd, enseignant.nom, enseignant.prenom, enseignant.statut, enseignant.statutaire, enseignant.actif, enseignant.administrateur, enseignant.supprime, ifnull(decharge.decharge,0) as decharge FROM enseignant left join decharge on enseignant.login = decharge.enseignant WHERE enseignant.supprime = 0";
+    			return $this->db->query($sql)->result_array();
+			}
 		}
 
 		function changePwd($login, $password){
