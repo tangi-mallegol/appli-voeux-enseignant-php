@@ -159,6 +159,10 @@
 				//echo "<tr><th>Identifiant</th><th>Publique</th><th>Semestre</th><th>Libellé</th><th>Nom du responsable</th><th>Prénom du responsable</th><th>Statut du responsable</th></tr>";
 				//echo "<div class='row'><div class='col-md-1'>IDENTIFIANT</div><div class='col-md-2'>PUBLIQUE</div><div class='col-md-1'>SEMESTRE</div><div class='col-md-3'>LIBELLE</div><div class='col-md-1'>NOM</div><div class='col-md-2'>PRENOM</div><div class='col-md-1'>STATUT</div></div>";
 
+			// on va afficher les modules une fois sur deux pour créer nos deux colones
+			// Dans chaques module nous allons tester si l'utilisateur est admin pour ajouter
+			// des fonctionnalités en plus sinon on reseigne juste les informations.
+
 			$i = 0;
 			echo "<div class='col-md-6'>";
 			for($i = 0; $i < count($modulesEnseignants) ; $i ++){
@@ -210,7 +214,7 @@
 												echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 												echo '<td><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-success module_btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Reserver cette partie</a></td></tr>';
 											}
-											
+
 										}
 										//echo "<br/><br/>";
 									}
@@ -271,7 +275,7 @@
 												echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 												echo '<td><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-success module_btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Reserver cette partie</a></td></tr>';
 											}
-											
+
 										}
 										//echo "<br/><br/>";
 									}

@@ -74,7 +74,7 @@
 						}
 						return $content;
 					}
-
+					// Display decharge
 					function displayDechargeInfoWithoutClass($sort){
 						$content = '';
 						$tabSort =  $sort;
@@ -84,7 +84,7 @@
 						}
 						return $content;
 					}
-
+					// Display Project
 					function displayProjetInfoWithoutClass($sort){
 						$content = '';
 						$tabSort =  $sort;
@@ -95,6 +95,7 @@
 						return $content;
 					}
 
+					// get total of hours by courses type
 					function getTotCoursesType($sort){
 						$sortTot = 0;
 						$tabSort =  $sort;
@@ -103,6 +104,7 @@
 						return $sortTot;
 					}
 
+					// get total hours of decharge
 					function getTotDechargeType($sort){
 						$sortTot = 0;
 						$tabSort =  $sort;
@@ -111,6 +113,7 @@
 						return $sortTot;
 					}
 
+					// get total hours by class
 					function getTotByClass($sort, $class){
 						$sortTot = 0;
 						$tabClass = $class;
@@ -125,6 +128,7 @@
 						return $tabClass;
 					}
 
+					// Display class by type of coruses
 					function displayClassByType($sort){
 						$sortTot = 0;
 						$class = [];
@@ -136,6 +140,7 @@
 						return $class;
 					}
 
+					// Display a container of all type courses
 					function displayCoursesBox($type, $typeContent, $typeTot){
 						echo'<article class="col-lg-6"><div class="type_box">';
 							echo '<h2>Mes '.$type.'</h2>';
@@ -178,6 +183,7 @@
 						$coursClass[$i] = $coursClass[$i].' ('.$coursClassTot[$i].' h)';
 					}
 
+					// calc total of free hours
 					$libreTot = 192 - ($CMTot + $TDTot + $TPTot + $ProjetTot + $DechargeTot);
 					if($libreTot < 0)
 						$libreTot = 0;

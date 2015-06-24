@@ -136,7 +136,8 @@
 						<td class="statut">'.$enseignant["statut"].'</td>';*/
 						$pourcentage = $enseignant['nb_heure']/$enseignant['statutaire'];
 						$class = "";
-						$class2 = "";
+						$class2 = "";$
+						// affiche la couleur d'avancement en fonction du pourcentage d'heure remplis
 						if($pourcentage < 0.3){
 							$class = 'userbox_header_red';
 							$class2 = 'userbox_containt_red';
