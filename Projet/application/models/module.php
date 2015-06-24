@@ -29,10 +29,10 @@
 			}
 		}
 
-		function removeModule($ident, $public, $semestre, $titre){
+		function removeModule($ident){
 			$sql = "select * from module where ident = '$ident'";
 			$result = $this->db->query($sql)->result_array();
-			if(count($result) == 0){
+			if(count($result) != 0){
 				$sql = "DELETE FROM contenu WHERE module = '$ident'";
 				$result = $this->db->query($sql);
 				if(!$result)

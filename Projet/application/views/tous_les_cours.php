@@ -65,7 +65,23 @@
 			color: #33443A;
 		}
 		.btn-primary{
-			margin: 1px;
+			margin-right: 10px;
+		}
+		.btn-danger {
+		    color: #FFF;
+		    background-color: #D9534F;
+		    border-color: #D43F3A;
+		    float: right;
+		    margin-right: 5%;
+		}
+		.btn-no-color{
+			color: #3F443A;
+			padding-left: 0;
+		  padding-right: 0;
+		  margin-left: -5px;
+		}
+		.btn-default, .btn-success{
+			min-width: 234px;
 		}
 		table {
         border-collapse: separate;
@@ -98,22 +114,22 @@
 		<div class='col-lg-9' style='margin-bottom:20px;' id='add_module'>
 
 			<h3>Ajout de Module</h3>
-			<form action="/tous_les_cours/createmodule" method="get" accept-charset="utf-8">
+			<form action="tous_les_cours/createModule" method="get" accept-charset="utf-8">
 			<div class='form-group'>
 			<label for="title">Libelle du module</label>
 				<input class='form-control' type="text" name="titre" value="" placeholder="Nom">
 			</div>
-			
+
 			<div class='form-group'>
 				<label for="title">Identifiant du module</label>
 				<input class='form-control' type="text" name="ident" value="" placeholder="Identifiant">
 			</div>
-			
+
 			<div class='form-group'>
 				<label for="title">Public</label>
 				<input class='form-control' type="text" name="public" value="" placeholder="Public">
 			</div>
-			
+
 			<div class='form-group'>
 			<label for="Title">Selestre</label>
 				<select name="semestre" class="form-control">
@@ -125,7 +141,7 @@
 			<button type="submit" class="btn btn-default">Valider</button>
 		</form>
 		</div>
-		
+
 			<?php
 				//Accès au tableau TP via : $TP
 				//Accès au tableau TD via : $TD
@@ -153,6 +169,7 @@
 										<p>".$modulesEnseignants[$i]['ident']."</p>
 										<p class='public_text'>".$modulesEnseignants[$i]['public']."</p>
 										<p>".$modulesEnseignants[$i]['semestre']."</p>
+										<a href='tous_les_cours/removeModule?module=".$modulesEnseignants[$i]['ident']."' class='btn btn-no-color'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>
 									</div>
 									<div class='modulebox_containt'>
 										<p>".$modulesEnseignants[$i]['libelle']."</p>";
@@ -167,7 +184,8 @@
 										if(!empty($contenu["nom"])){
 											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 											echo '<td><a class="btn btn-default module_btn" href="http://localhost/Projet/index.php/enseignant/'.$contenu['login'].'"
-															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-warning"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
+															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;
+																	<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-no-color"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
 
 										}
 										else{
@@ -179,7 +197,7 @@
 					echo "	</table></div>
 								</div>";
 				}
-				
+
 			}
 			echo "</div>";
 
@@ -191,6 +209,7 @@
 										<p>".$modulesEnseignants[$i]['ident']."</p>
 										<p class='public_text'>".$modulesEnseignants[$i]['public']."</p>
 										<p>".$modulesEnseignants[$i]['semestre']."</p>
+										<a href='tous_les_cours/removeModule?ident=".$modulesEnseignants[$i]['ident']."' class='btn btn-no-color'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>
 									</div>
 									<div class='modulebox_containt'>
 										<p>".$modulesEnseignants[$i]['libelle']."</p>";
@@ -204,7 +223,8 @@
 										if(!empty($contenu["nom"])){
 											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 											echo '<td><a class="btn btn-default module_btn" href="http://localhost/Projet/index.php/enseignant/'.$contenu['login'].'"
-															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-warning"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
+															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;
+																	<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-no-color"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
 										}
 										else{
 											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
@@ -222,7 +242,7 @@
 					.$moduleEnseignant['public']."</td><td>".$moduleEnseignant['semestre']."</td><td>".$moduleEnseignant['libelle'].
 					"</td><td>".$moduleEnseignant['nom']."</td><td>".$moduleEnseignant['prenom']."</td><td>".$moduleEnseignant['statut']
 					."</td></tr><tr id='div_".$moduleEnseignant['ident']."'></tr>";
-					
+
 
 				}
 				//echo "</table>"*/
@@ -255,7 +275,7 @@
 			$(this).html("Confirmer");
 			$(this).removeClass('ajouter_partie');
 			$(this).addClass('confirmer_ajout');
-			$(this).parent().html($(this).parent().html() + "<div style='margin-left:20px'><br/><br/><label for='title'>Nom&nbsp;</label><input type='text' name='nom'><br/><label for='title'>Type&nbsp;</label><select name='type'><option value='CM'>CM</option><option value='TD'>TD</option><option value='TP'>TP</option></select><br/><label for='title'>Nombre d'heure&nbsp;</label><input type='number' name='nb_heure'><br/></div>");
+			$(this).parent().html($(this).parent().html() + "<div style='margin-left:20px'><br/><br/><label for='title'>Nom&nbsp;</label><input type='text' name='nom'><br/><label for='title'>Type&nbsp;</label><select name='type'><option value='CM'>CM</option><option value='TD'>TD</option><option value='TP'>TP</option><option value='Projet'>Projet</option></select><br/><label for='title'>Nombre d'heure&nbsp;</label><input type='number' name='nb_heure'><br/></div>");
 
 			$(".confirmer_ajout").click(function(){
 				console.log("test");

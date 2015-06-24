@@ -21,7 +21,7 @@ class Tous_les_cours extends MY_MainController {
             unset($_SESSION['erreur']);
         }
         $this->load->model("module");
-        $array["modulesEnseignants"] =  $this->module->selectTousLesModulesAvecInfosEnseignant();    
+        $array["modulesEnseignants"] =  $this->module->selectTousLesModulesAvecInfosEnseignant();
         for($i = 0; $i < count($array["modulesEnseignants"]); $i ++){
             $array["modulesEnseignants"][$i]["contenu"] = $this->contenu->selectCoursEnFctModule($array["modulesEnseignants"][$i]["ident"]);
         }
@@ -33,7 +33,7 @@ class Tous_les_cours extends MY_MainController {
         $this->filter_access();
         $module = $_GET['module'];
         //$partie = $_GET['partie'];
-        $this->load->model("contenu");        
+        $this->load->model("contenu");
         $array["listeCours"] = $this->contenu->selectCoursEnFctModule($module);
 
         /*if(isset($cours[0]['enseignant'])){
@@ -47,13 +47,13 @@ class Tous_les_cours extends MY_MainController {
         $this->load->helper(array('form'));
         $this->load->view('pop_up_cours.php',$array);
     }
-    public function CreateModule(){
+    public function createModule(){
         $this->filter_access(true);
         $titre = $_GET['titre'];
         $ident = $_GET['ident'];
         $public = $_GET['public'];
         $semestre = $_GET['semestre'];
-        $this->load->model("module");        
+        $this->load->model("module");
         $result = $this->module->addModule($ident,$public,$semestre,$titre);
         $this->load->helper('url');
         if(isset($result['erreur']) && $result['erreur'] == true)
@@ -63,11 +63,11 @@ class Tous_les_cours extends MY_MainController {
 
     public function removeModule(){
         $this->filter_access(true);
-        $titre = $_GET['titre'];
-        $ident = $_GET['ident'];
-        $public = $_GET['public'];
-        $semestre = $_GET['semestre'];
-        $this->load->model("module");        
+        //$titre = $_GET['titre'];
+        $ident = $_GET['module'];
+        //$public = $_GET['public'];
+        //$semestre = $_GET['semestre'];
+        $this->load->model("module");
         $result = $this->module->removeModule($ident);
         $this->load->helper('url');
         if(isset($result['erreur']) && $result['erreur'] == true)
@@ -81,7 +81,7 @@ class Tous_les_cours extends MY_MainController {
         $name = $_GET['name'];
         $type = $_GET['type'];
         $nb_heure = $_GET['nb_heure'];
-        $this->load->model("contenu");        
+        $this->load->model("contenu");
         $result = $this->contenu->ajoutContenu($module,$name,$type,$nb_heure);
         $this->load->helper('url');
         if(isset($result['erreur']) && $result['erreur'] == true)
@@ -94,8 +94,8 @@ class Tous_les_cours extends MY_MainController {
         $module = $_GET['module'];
         $name = $_GET['name'];
         $nb_heure = $_GET['nb_heure'];
-        $this->load->model("contenu");        
-        $result = $this->contenu->removeContenu($module,$name,$type,$nb_heure);
+        $this->load->model("contenu");
+        $result = $this->contenu->removeContenu($module,$name);
         $this->load->helper('url');
         if(isset($result['erreur']) && $result['erreur'] == true)
             $_SESSION['erreur'] = $result;
@@ -111,7 +111,7 @@ class Tous_les_cours extends MY_MainController {
             $this->filter_access(true);
         $module = $_GET["module"];
         $partie = $_GET["partie"];
-        $this->load->model("contenu");    
+        $this->load->model("contenu");
         if($login != null)
             $result = $this->contenu->addProfContenu($module,$partie,$login);
         else
@@ -126,7 +126,7 @@ class Tous_les_cours extends MY_MainController {
         $this->filter_access(true);
         $module = $_GET["module"];
         $partie = $_GET["partie"];
-        $this->load->model("contenu");    
+        $this->load->model("contenu");
         $this->contenu->RemoveProfContenu($module,$partie);
         $this->load->helper('url');
         redirect("/tous_les_cours");
@@ -134,7 +134,7 @@ class Tous_les_cours extends MY_MainController {
 
     public function ExportContenu(){
         $this->filter_access();
-        $this->load->model("contenu");  
+        $this->load->model("contenu");
         $this->load->dbutil();
         $this->load->helper('file');
         $this->load->helper('download');
