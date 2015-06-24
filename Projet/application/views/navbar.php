@@ -12,19 +12,17 @@ echo '<div id="top-navbar" >
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="home">Metezers</a>
+                <a class="navbar-brand" href="/Projet/index.php/mes_cours" style="background-color: rgb(94, 176, 94);color: white;">Metezers</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/Projet/index.php/mes_cours">Mes cours</a></li>
+                    <li><a href="/Projet/index.php/mes_cours"><span class="glyphicon glyphicon-home" style="margin-right: 5px;" aria-hidden="true"></span>Mes cours</a></li>
                     <li><a href="/Projet/index.php/tous_les_cours">Tous les cours</a></li>
                     <li><a href="/Projet/index.php/utilisateurs">Utilisateurs</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/Projet/index.php/profil"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Profil</a></li>
                     <li><a href="/Projet/index.php/home/deconnexion">Deconnexion</a></li>
                 </ul>
             </div>
@@ -44,18 +42,16 @@ echo '<div id="top-navbar" >
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="home">Metezers</a>
+                <a class="navbar-brand" href="/Projet/index.php/mes_cours" style="background-color: rgb(94, 176, 94);color: white;">Metezers</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/Projet/index.php/vos_cours">Mes cours</a></li>
+                    <li><a href="/Projet/index.php/vos_cours"><span class="glyphicon glyphicon-home" style="margin-right: 5px;" aria-hidden="true"></span> Mes cours</a></li>
                     <li><a href="/Projet/index.php/tous_les_cours">Tous les cours</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/Projet/index.php/profil"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Profil</a></li>
                     <li><a href="/Projet/index.php/home/deconnexion">Deconnexion</a></li>
                 </ul>
             </div>
