@@ -145,7 +145,8 @@ class Tous_les_cours extends MY_MainController {
         $this->load->helper('download');
         $delimiter = ";";
         $newline = "\r\n";
-        $data = $this->dbutil->csv_from_result($this->contenu->ExportContenu(), $delimiter, $newline);
+        header ("Content-disposition: attachment; filename=csvoutput_" . time() . ".csv") ;
+        $data = mb_convert_encoding($this->dbutil->csv_from_result($this->contenu->ExportContenu(), $delimiter, $newline), "ISO-8859-1", "UTF-8");
         force_download("TousLesCours.csv", $data);
     }
 

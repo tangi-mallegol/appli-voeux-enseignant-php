@@ -102,7 +102,9 @@
 		//-----------AJOUT-----------
 		function ajoutContenu($module, $partie, $type, $hed, $enseignant = null){
 			if($partie == "")
-				return array("erreur" => true, "message" => "Erreur lors de l'ajout du contenu.");
+				return array("erreur" => true, "message" => "Veuillez remplir le contenu.");
+			if($hed = null || $hed <= 0 )
+				return array("erreur" => true, "message" => "Veuillez saisir un nombre d'heure positif.");
  			$sql = "SELECT * FROM contenu WHERE module = '$module' AND partie = '$partie'";
  			$result = $this->db->query($sql)->result_array();
  			if(count($result) != 0){
@@ -124,7 +126,7 @@
 			$sql = "SELECT * FROM contenu WHERE enseignant = '$enseignant' AND module = '$module' AND partie = '$partie'";
 			$result = $this->db->query($sql)->result_array();
 			if(count($result) == 0){
-				$result = GetNbHeureLibreProf($login);
+				$result = $this->GetNbHeureLibreProf($login);
 				//On a le prof qui est au dela de ses heures possible et comme il a une decharge, on lui refuse de prendre le cours
 				if($result['heure_restante'] < 0 && $result['decharge'] > 0)
 					return array("erreur" => true, "message" => "Impossible d'ajouter cet enseignant à ce contenu car il dépasserai son nombre d'heure autorisé. Pour plus d'informations, contactez un administrateur.");
@@ -170,7 +172,7 @@
 			if($login != null)
 				return $this->db->query("SELECT module.ident as Identifiant, module.libelle as Libelle, module.semestre as Semestre, contenu.partie as Partie, contenu.hed as 'Heure(s) equivalent TD' FROM contenu NATURAL JOIN module LEFT JOIN enseignant ON contenu.enseignant = enseignant.login WHERE contenu.module = module.ident AND contenu.enseignant = '$login' ORDER BY module.ident, contenu.type, contenu.partie");
 			else
-				return $this->db->query("SELECT module.ident as Identifiant, module.libelle as Libelle, module.semestre as Semestre, contenu.partie as Partie, contenu.hed as 'Heure(s) equivalent TD' FROM contenu NATURAL JOIN module LEFT JOIN enseignant ON contenu.enseignant = enseignant.login WHERE contenu.module = module.ident ORDER BY module.ident, contenu.type, contenu.partie");
+				return $this->db->query("SELECT module.ident as Identifiant, module.libelle as Libelle, module.semestre as Semestre, contenu.partie as Partie, contenu.hed as 'Heure(s) equivalent TD', enseignant.prenom as Prenom, enseignant.nom as Nom FROM contenu NATURAL JOIN module LEFT JOIN enseignant ON contenu.enseignant = enseignant.login WHERE contenu.module = module.ident ORDER BY module.ident, contenu.type, contenu.partie");
 		}
 		
 	}
