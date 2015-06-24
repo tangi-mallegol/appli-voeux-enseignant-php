@@ -74,7 +74,7 @@
 						$tabSort =  $sort;
 						foreach ($tabSort as $aSort){
 								$content = $content.'<a class="btn btn-primary module_btn" data-toggle="collapse" href="/"
-												aria-expanded="false" aria-controls="collapseExample">'.$aSort['decharge'].'</a>';
+												aria-expanded="false" aria-controls="collapseExample">'.$aSort['decharge'].'h</a>';
 						}
 						return $content;
 					}
@@ -172,11 +172,11 @@
 						$coursClass[$i] = $coursClass[$i].' ('.$coursClassTot[$i].' h)';
 					}
 
-					$libreTot = 192 - ($CMTot + $TDTot + $TPTot);
+					$libreTot = 192 - ($CMTot + $TDTot + $TPTot + $ProjetTot + $DechargeTot);
 					if($libreTot < 0)
 						$libreTot = 0;
-					$labelTab = ["CM (".$CMTot." h)", "TD (".$TDTot." h)", "TP (".$TPTot." h)", "Libre (".$libreTot." h)"];
-					$valueTab = [$CMTot, $TDTot, $TPTot, $libreTot];
+					$labelTab = ["CM (".$CMTot." h)", "TD (".$TDTot." h)", "TP (".$TPTot." h)", "Projet (".$ProjetTot." h)", "Decharge (".$DechargeTot." h)", "Libre (".$libreTot." h)"];
+					$valueTab = [$CMTot, $TDTot, $TPTot, $ProjetTot, $DechargeTot, $libreTot];
 
 					//call the js function drawDonutChart
 					echo '<script type="text/javascript">drawDonutChart('.json_encode($labelTab).','.json_encode($valueTab).', "#ChartCours");</script>';
