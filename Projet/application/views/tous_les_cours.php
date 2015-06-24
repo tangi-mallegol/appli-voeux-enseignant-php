@@ -52,7 +52,6 @@
 			border-bottom-right-radius: 4px;
 			border-bottom-left-radius: 4px;
 			padding: 2%;
-			overflow: hidden;
 			min-height: 128px;
 			/*height: 110px;
 			max-height: 110px;*/
@@ -168,9 +167,11 @@
 									<div class='modulebox_header'>
 										<p>".$modulesEnseignants[$i]['ident']."</p>
 										<p class='public_text'>".$modulesEnseignants[$i]['public']."</p>
-										<p>".$modulesEnseignants[$i]['semestre']."</p>
-										<a href='tous_les_cours/removeModule?module=".$modulesEnseignants[$i]['ident']."' class='btn btn-no-color'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>
-									</div>
+										<p>".$modulesEnseignants[$i]['semestre']."</p>";
+										if(isset($admin) && $admin == true){
+											echo "<a href='tous_les_cours/removeModule?module=".$modulesEnseignants[$i]['ident']."' class='btn btn-no-color'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
+										}
+									echo "</div>
 									<div class='modulebox_containt'>
 										<p>".$modulesEnseignants[$i]['libelle']."</p>";
 									if(isset($admin) && $admin == true){
@@ -184,13 +185,32 @@
 										if(!empty($contenu["nom"])){
 											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 											echo '<td><a class="btn btn-default module_btn" href="http://localhost/Projet/index.php/enseignant/'.$contenu['login'].'"
-															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;
-																	<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-no-color"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
+															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;';
+											if((isset($admin) && $admin == true) || ($contenu["login"] == $login)){
+												echo '<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-no-color"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
+											}
 
 										}
 										else{
-											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
-											echo '<td><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-success module_btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Reservez cette partie</a></td></tr>';
+											if(isset($admin) && $admin == true){
+												echo '<tr><td><label>'.$contenu["partie"].' ('.$contenu["hed"].' h) : &nbsp;</label></td><div class="dropdown">
+												  <td><div class="dropdown">
+												  <button class="btn btn-success dropdown-toggle" type="button" id="'.$contenu["module"]."-".$contenu["partie"].'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+												    Reserver cette partie
+												    <span class="caret"></span>
+												  </button>
+												  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">';
+												  foreach ($enseignant as $prof) {
+												  	echo '<li><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'&login='.$prof['login'].'">'.$prof['prenom'].' '.$prof['nom'].'</a></li>';
+												  }
+												   echo '</ul>
+												</div></td></tr>';
+											}
+											else{
+												echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
+												echo '<td><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-success module_btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Reservez cette partie</a></td></tr>';
+											}
+											
 										}
 										//echo "<br/><br/>";
 									}
@@ -203,14 +223,16 @@
 
 			echo "<div class='col-md-6'>";
 			for($i = 0; $i < count($modulesEnseignants) ; $i ++){
-				if($i%2 == 1){
+				if($i%2 == 0){
 					echo "<div class='row module' id='".$modulesEnseignants[$i]['ident']."'>
 									<div class='modulebox_header'>
 										<p>".$modulesEnseignants[$i]['ident']."</p>
 										<p class='public_text'>".$modulesEnseignants[$i]['public']."</p>
-										<p>".$modulesEnseignants[$i]['semestre']."</p>
-										<a href='tous_les_cours/removeModule?ident=".$modulesEnseignants[$i]['ident']."' class='btn btn-no-color'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>
-									</div>
+										<p>".$modulesEnseignants[$i]['semestre']."</p>";
+										if(isset($admin) && $admin == true){
+											echo "<a href='tous_les_cours/removeModule?module=".$modulesEnseignants[$i]['ident']."' class='btn btn-no-color'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
+										}
+									echo "</div>
 									<div class='modulebox_containt'>
 										<p>".$modulesEnseignants[$i]['libelle']."</p>";
 									if(isset($admin) && $admin == true){
@@ -219,22 +241,44 @@
 									echo "</div>
 									<div class='modulebox_footer'>
 									<table cellspacing='10px'>";
+
 									foreach ($modulesEnseignants[$i]["contenu"] as $contenu) {
 										if(!empty($contenu["nom"])){
 											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 											echo '<td><a class="btn btn-default module_btn" href="http://localhost/Projet/index.php/enseignant/'.$contenu['login'].'"
-															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;
-																	<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-no-color"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
+															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;';
+											if((isset($admin) && $admin == true) || ($contenu["login"] == $login)){
+												echo '<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-no-color"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
+											}
+
 										}
 										else{
-											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
-											echo '<td><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-success module_btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Reservez cette partie</a></td></tr>';
+											if(isset($admin) && $admin == true){
+												echo '<tr><td><label>'.$contenu["partie"].' ('.$contenu["hed"].' h) : &nbsp;</label></td><div class="dropdown">
+												  <td><div class="dropdown">
+												  <button class="btn btn-success dropdown-toggle" type="button" id="'.$contenu["module"]."-".$contenu["partie"].'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+												    Reserver cette partie
+												    <span class="caret"></span>
+												  </button>
+												  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">';
+												  foreach ($enseignant as $prof) {
+												  	echo '<li><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'&login='.$prof['login'].'">'.$prof['prenom'].' '.$prof['nom'].'</a></li>';
+												  }
+												   echo '</ul>
+												</div></td></tr>';
+											}
+											else{
+												echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
+												echo '<td><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-success module_btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Reservez cette partie</a></td></tr>';
+											}
+											
 										}
 										//echo "<br/><br/>";
 									}
 					echo "	</table></div>
 								</div>";
 				}
+
 			}
 			echo "</div>";
 				/*foreach($modulesEnseignants as $moduleEnseignant){

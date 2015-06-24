@@ -8,6 +8,8 @@ class Tous_les_cours extends MY_MainController {
         $array["admin"] =  $_SESSION["admin"];
         $login = $_SESSION["login"];
         $this->load->model("contenu");
+        $this->load->model("user");
+        $array['login'] = $login;
         $array["cours"] =  $this->contenu->selectTousLesCours();
         $array["TP"] =  $this->contenu->selectTousLesTPs();
         $array["TD"] =  $this->contenu->selectTousLesTDs();
@@ -16,6 +18,7 @@ class Tous_les_cours extends MY_MainController {
         $array["TP_null"] =  $this->contenu->selectTPSansEnseignant();
         $array["TD_null"] =  $this->contenu->selectTDSansEnseignant();
         $array["CM_null"] =  $this->contenu->selectCMSansEnseignant();
+        $array["enseignant"] =  $this->user->selectEnseignant();
         if(isset($_SESSION['erreur'])){
             $array['erreur'] = $_SESSION['erreur'];
             unset($_SESSION['erreur']);
@@ -103,14 +106,16 @@ class Tous_les_cours extends MY_MainController {
     }
 
 
-    public function ReserveCours($login = null){
+    public function ReserveCours(){
         //Si on passe un login, c'est que c'est l'administrateur qui reserve pour un compte sinon, c'est l'utilisateur lui-même
-        if($login = null)
+        $login = $_GET["login"];
+        if(!isset($login))
             $this->filter_access();
         else
             $this->filter_access(true);
         $module = $_GET["module"];
         $partie = $_GET["partie"];
+        
         $this->load->model("contenu");
         if($login != null)
             $result = $this->contenu->addProfContenu($module,$partie,$login);
