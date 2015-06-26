@@ -110,7 +110,12 @@
 				echo "
 				<button id='buton_add_module' class='btn btn-primary'>Ajouter un module</button>";
 			}
-			echo "<a href='/tous_les_cours/ExportContenu' class='btn btn-success'>Export .csv</a></div>"
+			echo "<a href='/tous_les_cours/ExportContenu' class='btn btn-success'>Export .csv</a>
+				<form action='tous_les_cours' class='search_form' method='get' accept-charset='utf-8'>
+					<input type='text' name='module' value='' placeholder='Module'>
+					<button class='btn btn-default' type='submit'>Go!</button>
+				</form>
+			</div>";
 
 		?>
 		<div class='col-lg-9' style='margin-bottom:20px;' id='add_module'>
