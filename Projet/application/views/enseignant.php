@@ -42,12 +42,13 @@
 <section class="row">
 	<div class="container">
 		<article class="col-lg-12">
+			<h1>Profil de <?php echo $loginEnseignant ?> </h1>
 			<article class="col-lg-6">
-				<h1>Mes Cours:</h1>
+				<h2>Types de cours:</h2>
 				<div class="chartSpace" id="ChartCours"></div>
 			</article>
 			<article class="col-lg-6">
-				<h1>Mes Classes:</h1>
+				<h2>Classes:</h2>
 				<div class="chartSpace" id="ChartClasses"></div>
 			</article>
 				<?php

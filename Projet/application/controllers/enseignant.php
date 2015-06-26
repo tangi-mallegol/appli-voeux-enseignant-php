@@ -9,6 +9,7 @@ class Enseignant extends MY_MainController {
         $this->filter_access();
         //On récupère l'enseignant passé en paramètre
         $enseignant = $this->uri->segment(2);
+				$array["loginEnseignant"] = $enseignant;
 		$array["admin"] =  $_SESSION["admin"];
 		//On charge les models dans le controller
         $this->load->model("contenu");
@@ -23,7 +24,7 @@ class Enseignant extends MY_MainController {
 		$array["Projet"] =  $this->contenu->selectProjet($enseignant);
 		$array["Decharge"] =  $this->decharge->selectDechargeLogin($enseignant);
 		$array["module"] =  $this->module->selectModulesLoginAvecInfosEnseignant($enseignant);
-		//On charge la vue enseignant avec en paramètre le tableau de données que l'on a alimenté 
+		//On charge la vue enseignant avec en paramètre le tableau de données que l'on a alimenté
 		$this->load->view('enseignant.php',$array);
 	}
 

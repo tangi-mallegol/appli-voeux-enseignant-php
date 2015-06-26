@@ -49,11 +49,11 @@
 		<article class="col-lg-12">
 
 			<article class="col-lg-6">
-				<h1>Mes Cours:</h1>
+				<h2>Mes Cours:</h2>
 				<div class="chartSpace" id="ChartCours"></div>
 			</article>
 			<article class="col-lg-6">
-				<h1>Mes Classes:</h1>
+				<h2>Mes Classes:</h2>
 				<div class="chartSpace" id="ChartClasses"></div>
 			</article>
 				<?php
