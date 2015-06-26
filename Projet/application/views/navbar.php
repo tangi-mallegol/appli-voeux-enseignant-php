@@ -23,7 +23,7 @@ echo '<div id="top-navbar" >
                     <li><a href="/Projet/index.php/utilisateurs">Utilisateurs</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/Projet/index.php/home/deconnexion">Deconnexion</a></li>
+                    <li><a href="/Projet/index.php/mes_cours/deconnexion">Deconnexion</a></li>
                 </ul>
             </div>
         </div>
@@ -52,7 +52,7 @@ echo '<div id="top-navbar" >
                     <li><a href="/Projet/index.php/tous_les_cours">Tous les cours</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/Projet/index.php/home/deconnexion">Deconnexion</a></li>
+                    <li><a href="/Projet/index.php/mes_cours/deconnexion">Deconnexion</a></li>
                 </ul>
             </div>
         </div>

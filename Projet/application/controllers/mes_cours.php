@@ -38,8 +38,15 @@ class Mes_cours extends MY_MainController {
         //On initialise les attributs de csv_from_result
         $delimiter = ";";
         $newline = "\r\n";
+        header ("Content-disposition: attachment; filename=csvoutput_" . time() . ".csv") ;
         $data = $this->dbutil->csv_from_result($this->contenu->ExportContenu($_SESSION['login']), $delimiter, $newline);
         //On force le telechargement
         force_download("MesCours.csv", $data);
+    }
+
+    public function deconnexion(){
+        session_destroy();
+        $this->load->helper('url');
+        redirect("/welcome");
     }
 }

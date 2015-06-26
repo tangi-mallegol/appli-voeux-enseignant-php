@@ -37,7 +37,7 @@
                                                     <i class="glyphicon glyphicon-lock"></i>
                                                 </span>
                                             <input class="form-control" id="password" name="password" placeholder="Mot de passe" type="password">
-                                        </div>    
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <input type="submit" class="btn btn-lg btn-primary btn-block" value="Connexion">
@@ -48,10 +48,7 @@
                         </fieldset></form>
 
                 </div>
-                <div class="panel-footer ">
-                    <a href="/Admin/set-password">Changer de mot de passe</a>
-                </div>
-                
+
             </div>
         </div>
     </div>

@@ -227,7 +227,7 @@
 
 			echo "<div class='col-md-6'>";
 			for($i = 0; $i < count($modulesEnseignants) ; $i ++){
-				if($i%2 == 0){
+				if($i%2 == 1){
 					echo "<div class='row module' id='".$modulesEnseignants[$i]['ident']."'>
 									<div class='modulebox_header'>
 										<p>".$modulesEnseignants[$i]['ident']."</p>

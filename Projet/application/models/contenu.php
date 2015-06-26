@@ -122,9 +122,8 @@
 			//Si un champ n'est pas rempli (paramètre = null), un message d'erreur est envoyé
 			if($partie == "")
 				return array("erreur" => true, "message" => "Veuillez remplir le contenu.");
-			if($hed = null || $hed <= 0 )
-				return array("erreur" => true, "message" => "Veuillez saisir un nombre d'heure positif.");
-			
+			if($hed == null || $hed <= 0 )
+				return array("erreur" => true, "message" => "Veuillez saisir un nombre d'heure positif : ".$hed);
 			//Si un contenu ayant le même module et la même partie existe : message d'erreur renvoyé (contenu déjà existant)
  			$sql = "SELECT * FROM contenu WHERE module = '$module' AND partie = '$partie'";
  			$result = $this->db->query($sql)->result_array();
@@ -146,13 +145,20 @@
 
 		//Permet d'ajouter un enseignant à un contenu
 		function addProfContenu($module, $partie, $enseignant){
-			$sql = "SELECT * FROM contenu WHERE enseignant = '$enseignant' AND module = '$module' AND partie = '$partie'";
+			$sql = "SELECT * FROM contenu WHERE module = '$module' AND partie = '$partie'";
+
 			$result = $this->db->query($sql)->result_array();
-			if(count($result) == 0){
+			if(count($result) == 0)
+				return array("erreur" => true, "message" => "Aucun contenu trouvé pour ce nom de partie et ce nom de module.");
+			if($result[0]['enseignant'] == null){
+				$nb_heure_module = $result[0]['hed'];
 				$result = $this->GetNbHeureLibreProf($login);
 				//On a le prof qui est au dela de ses heures possible et comme il a une decharge, on lui refuse de prendre le cours
-				if($result['heure_restante'] < 0 && $result['decharge'] > 0)
-					return array("erreur" => true, "message" => "Impossible d'ajouter cet enseignant à ce contenu car il dépasserai son nombre d'heure autorisé. Pour plus d'informations, contactez un administrateur.");
+				if($result['heure_restante'] - $result['hed']< 0 && $result['decharge'] > 0)
+					return array("erreur" => true, "message" => "Impossible d'ajouter cet enseignant à ce contenu car il dépasserai son nombre d'heure autorisé. Pour plus d'informations, contactez un administrateur. heure restante : ".$result['heure_restante'].", hed : ".$result['hed']);
+				if(isset($result['heure_restante']) || isset($nb_heure_module))
+					return array("erreur" => true, "message" => "Test ".$result['heure_restante'].", hed : ".$result['hed']);
+				return array("erreur" => true, "message" => "Impossible d'ajouter cet enseignant à ce contenu car il dépasserai son nombre d'heure autorisé. Pour plus d'informations, contactez un administrateur. heure restante : ".$result['heure_restante'].", hed : ".$result['hed']);
 				$sql = "UPDATE contenu SET enseignant = ? WHERE module = ? AND partie = ?";
 				$result = $this->db->query($sql, array($enseignant, $module, $partie));	
 				if(!$result)

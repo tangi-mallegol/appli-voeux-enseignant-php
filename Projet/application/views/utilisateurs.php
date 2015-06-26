@@ -136,7 +136,7 @@
 						<td class="statut">'.$enseignant["statut"].'</td>';*/
 						$pourcentage = $enseignant['nb_heure']/$enseignant['statutaire'];
 						$class = "";
-						$class2 = "";$
+						$class2 = "";
 						// affiche la couleur d'avancement en fonction du pourcentage d'heure remplis
 						if($pourcentage < 0.3){
 							$class = 'userbox_header_red';
@@ -202,21 +202,22 @@
     	});
 		$("#create").click(function(){
 			$("#form_enseignant").removeClass('hidden');
-			$("#form_enseignant").html('<form action="utilisateurs/creer" method="post" accept-charset="utf-8" class="form-horizontal">' +
-				'<div class="form-group"><div class="col-sm-10">' +
-				'<input type="text" class="form-control" id="nom" placeholder="Nom" name="nom"></div></div>' +
-				'<div class="form-group"><div class="col-sm-10">' +
-				'<input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom"></div></div>' +
-				'<div class="form-group"><div class="col-sm-10">' +
-				'<input type="text" class="form-control" id="login" placeholder="Identifiant" name="login"></div></div>' +
-				'<div class="form-group"><div class="col-sm-10">' +
-				'<input type="password" class="form-control" id="password" placeholder="Mot de passe" name="password"></div></div>' +
-				'<div class="form-group"><div class="col-sm-10">' +
-				'<input type="text" class="form-control" id="statut" placeholder="statut" name="statut"></div></div>' +
-				'<div class="form-group"><div class="col-sm-10">' +
-				'<input type="text" class="form-control" id="statutaire" placeholder="Statutaire" name="statutaire"></div></div>' +
-				'<div class="form-group"><div class="col-sm-10">' +
-				'<input type="text" class="form-control" id="decharge" placeholder="Decharge" name="decharge"></div></div>' +
+			$("#form_enseignant").html(
+				'<form action="utilisateurs/creer" method="post" accept-charset="utf-8" class="form-horizontal">' +
+				'<div class="form-group"><div class="col-sm-10"><label for="title">Nom</label>' +
+				'<input type="text" class="form-control" id="nom" placeholder="Nom" name="nom" required></div></div>' +
+				'<div class="form-group"><div class="col-sm-10"><label for="title">Prénom</label>' +
+				'<input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom" required></div></div>' +
+				'<div class="form-group"><div class="col-sm-10"><label for="title">Identifiant</label>' +
+				'<input type="text" class="form-control" id="login" placeholder="Identifiant" name="login" required></div></div>' +
+				'<div class="form-group"><div class="col-sm-10"><label for="title">Mot de passe</label>' +
+				'<input type="password" class="form-control" id="password" placeholder="Mot de passe" name="password" required></div></div>' +
+				'<div class="form-group"><div class="col-sm-10"><label for="title">Statut</label>' +
+				'<input type="text" class="form-control" id="statut" placeholder="statut" name="statut" required></div></div>' +
+				'<div class="form-group"><div class="col-sm-10"><label for="title">Statutaire</label>' +
+				'<input type="text" class="form-control" id="statutaire" placeholder="Statutaire" name="statutaire" required></div></div>' +
+				'<div class="form-group"><div class="col-sm-10"><label for="title">Decharge</label>' +
+				'<input type="text" class="form-control" id="decharge" placeholder="Decharge" name="decharge" required></div></div>' +
 				'<div class="form-group"><div class=" col-sm-10">' +
 				'<div class="checkbox"><label><input type="checkbox" name="admin"> Administrateur</label></div>' +
 				'<div class="checkbox"><label><input type="checkbox" name="actif"> Actif</label></div>' +
@@ -242,16 +243,17 @@
 			var admin = _this.find('input[name="input_admin"]').val() == 0 ? "" : "checked";
 			var actif = _this.find('input[name="input_actif"]').val() == 0 ? "" : "checked";
 			$("#form_enseignant").html('<form action="utilisateurs/modifier" method="post" accept-charset="utf-8" class="form-horizontal" id="form_modifier">' +
-				'<input type="hidden" name="login" value="' + login +'"><div class="form-group"><div class="col-sm-10">' +
-				'<input type="text" class="form-control" id="nom" placeholder="Nom" name="nom" value="' + nom +'"></div></div>' +
-				'<div class="form-group"><div class="col-sm-10">' +
-				'<input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom" value="' + prenom +'"></div></div>' +
-				'<div class="form-group"><div class="col-sm-10">' +
-				'<input type="text" class="form-control" id="statut" placeholder="Statut" name="statut" value="' + statut + '"></div></div>' +
-				'<div class="form-group"><div class="col-sm-10">' +
-				'<input type="text" class="form-control" id="statutaire" placeholder="Statutaire" name="statutaire" value="' + statutaire + '"></div></div>' +
-				'<div class="form-group"><div class=" col-sm-10">' +
-				'<input type="text" class="form-control" id="decharge" placeholder="Decharge" name="decharge" value="' + decharge + '"></div></div>' +
+				'<input type="hidden" name="login" value="' + login +'">' +
+				'<div class="form-group"><div class="col-sm-10"><label for="title">Nom</label>' +
+				'<input type="text" class="form-control" id="nom" placeholder="Nom" name="nom" value="' + nom +'" required></div></div>' +
+				'<div class="form-group"><div class="col-sm-10"><label for="title">Prénom</label>' +
+				'<input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prenom" value="' + prenom +'" required></div></div>' +
+				'<div class="form-group"><div class="col-sm-10"><label for="title">Statut</label>' +
+				'<input type="text" class="form-control" id="statut" placeholder="Statut" name="statut" value="' + statut + '" required></div></div>' +
+				'<div class="form-group"><div class="col-sm-10"><label for="title">Statutaire</label>' +
+				'<input type="text" class="form-control" id="statutaire" placeholder="Statutaire" name="statutaire" value="' + statutaire + '" required></div></div>' +
+				'<div class="form-group"><div class=" col-sm-10"><label for="title">Decharge</label>' +
+				'<input type="text" class="form-control" id="decharge" placeholder="Decharge" name="decharge" value="' + decharge + '" required></div></div>' +
 				'<div class="form-group"><div class=" col-sm-10">' +
 				'<div class="checkbox"><label><input type="checkbox" name="admin" ' + admin +'> Administrateur</label></div>' +
 				'<div class="checkbox"><label><input type="checkbox" name="actif" ' + actif +'> Actif</label></div></div>' +

@@ -14,6 +14,7 @@ class Welcome extends MY_MainController {
             $this->load->helper('url');
             redirect("/mes_cours");
         }
+        $this->load->helper(array('form'));
 		$this->load->view('welcome_message',$array);
 	}
 
