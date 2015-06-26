@@ -13,8 +13,11 @@
 			return $this->db->query($sql)->result_array();
 		}
 
-		function selectTousLesModulesAvecInfosEnseignant(){
-			$sql = "select ident, public, semestre, libelle, nom, prenom, statut from module left join enseignant on responsable=login";
+		function selectTousLesModulesAvecInfosEnseignant($module = null){
+			if($module == null)
+				$sql = "select ident, public, semestre, libelle, nom, prenom, statut from module left join enseignant on responsable=login";
+			else
+				$sql = "select ident, public, semestre, libelle, nom, prenom, statut from module left join enseignant on responsable=login WHERE ident = '$module'";
 			return $this->db->query($sql)->result_array();
 		}
 

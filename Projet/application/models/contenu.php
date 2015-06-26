@@ -13,6 +13,26 @@
 	    	$sql = "SELECT * FROM contenu left join enseignant on enseignant=login WHERE module = ?;";
 			return $this->db->query($sql, array($module))->result_array();
 	    }
+
+	    function selectCMEnFctModule($module){
+	    	$sql = "SELECT * FROM contenu left join enseignant on enseignant=login WHERE module = ? AND type = 'CM';";
+			return $this->db->query($sql, array($module))->result_array();
+	    }
+
+	    function selectTDEnFctModule($module){
+	    	$sql = "SELECT * FROM contenu left join enseignant on enseignant=login WHERE module = ? AND type = 'TD';";
+			return $this->db->query($sql, array($module))->result_array();
+	    }
+
+	    function selectTPEnFctModule($module){
+	    	$sql = "SELECT * FROM contenu left join enseignant on enseignant=login WHERE module = ? AND type = 'TP';";
+			return $this->db->query($sql, array($module))->result_array();
+	    }
+
+	    function selectProjetEnFctModule($module){
+	    	$sql = "SELECT * FROM contenu left join enseignant on enseignant=login WHERE module = ? AND type = 'Projet';";
+			return $this->db->query($sql, array($module))->result_array();
+	    }
 		
 		//Retourne un tableau contenant les contenus en fonction d'un login
 	    function selectCountCoursForLogin($login){
@@ -139,26 +159,22 @@
 
 		//Retourne un tableau contenant le nombre d'heure libre d'un enseignant
 		function GetNbHeureLibreProf($login){
-			$sql = "SELECT enseignant.statutaire - (ifnull(decharge.decharge,0) + ifnull(SUM(contenu.hed),0)) AS heure_restante,  ifnull(decharge.decharge,0) as Decharge FROM contenu LEFT JOIN enseignant on contenu.enseignant = enseignant.login LEFT JOIN decharge on decharge.enseignant = contenu.enseignant WHERE contenu.enseignant = '$login'";
+			$sql = "SELECT enseignant.statutaire - (ifnull(decharge.decharge,0) + ifnull(SUM(contenu.hed),0)) AS heure_restante,  ifnull(decharge.decharge,0) as decharge FROM contenu LEFT JOIN enseignant on contenu.enseignant = enseignant.login LEFT JOIN decharge on decharge.enseignant = contenu.enseignant WHERE contenu.enseignant = '$login'";
 			return $this->db->query($sql)->result_array();
 		}
 
 		//Permet d'ajouter un enseignant à un contenu
 		function addProfContenu($module, $partie, $enseignant){
 			$sql = "SELECT * FROM contenu WHERE module = '$module' AND partie = '$partie'";
-
 			$result = $this->db->query($sql)->result_array();
 			if(count($result) == 0)
 				return array("erreur" => true, "message" => "Aucun contenu trouvé pour ce nom de partie et ce nom de module.");
 			if($result[0]['enseignant'] == null){
 				$nb_heure_module = $result[0]['hed'];
-				$result = $this->GetNbHeureLibreProf($login);
+				$result = $this->GetNbHeureLibreProf($enseignant);
 				//On a le prof qui est au dela de ses heures possible et comme il a une decharge, on lui refuse de prendre le cours
-				if($result['heure_restante'] - $result['hed']< 0 && $result['decharge'] > 0)
-					return array("erreur" => true, "message" => "Impossible d'ajouter cet enseignant à ce contenu car il dépasserai son nombre d'heure autorisé. Pour plus d'informations, contactez un administrateur. heure restante : ".$result['heure_restante'].", hed : ".$result['hed']);
-				if(isset($result['heure_restante']) || isset($nb_heure_module))
-					return array("erreur" => true, "message" => "Test ".$result['heure_restante'].", hed : ".$result['hed']);
-				return array("erreur" => true, "message" => "Impossible d'ajouter cet enseignant à ce contenu car il dépasserai son nombre d'heure autorisé. Pour plus d'informations, contactez un administrateur. heure restante : ".$result['heure_restante'].", hed : ".$result['hed']);
+				if( (int)$result[0]['heure_restante'] - (int)$nb_heure_module < 0 && (int)$result[0]['decharge'] > 0)
+					return array("erreur" => true, "message" => "Impossible d'ajouter cet enseignant à ce contenu car il dépasserai son nombre d'heure autorisé. Pour plus d'informations, contactez un administrateur.");
 				$sql = "UPDATE contenu SET enseignant = ? WHERE module = ? AND partie = ?";
 				$result = $this->db->query($sql, array($enseignant, $module, $partie));	
 				if(!$result)

@@ -5,26 +5,28 @@ class Tous_les_cours extends MY_MainController {
 	public function index()
 	{
         //On vérifie que l'utilisateur est bien loggué
+        $module = !isset($_GET['module']) ? null : $_GET['module'];
         $this->filter_access();
-        $array["admin"] =  $_SESSION["admin"];
-        $login = $_SESSION["login"];
-        //On charge les modèles dont on aura besoin
-        $this->load->model("contenu");
-        $this->load->model("user");
-        $this->load->model("module");
-        $array['login'] = $login;
-        $array["cours"] =  $this->contenu->selectTousLesCours();
-        $array["TP"] =  $this->contenu->selectTousLesTPs();
-        $array["TD"] =  $this->contenu->selectTousLesTDs();
-        $array["CM"] =  $this->contenu->selectTousLesCMs();
-        $array["cours_null"] =  $this->contenu->selectCoursSansEnseignant();
-        $array["TP_null"] =  $this->contenu->selectTPSansEnseignant();
-        $array["TD_null"] =  $this->contenu->selectTDSansEnseignant();
-        $array["CM_null"] =  $this->contenu->selectCMSansEnseignant();
-        $array["enseignant"] =  $this->user->selectEnseignant();
-        $array["modulesEnseignants"] =  $this->module->selectTousLesModulesAvecInfosEnseignant();
-        for($i = 0; $i < count($array["modulesEnseignants"]); $i ++){
-            $array["modulesEnseignants"][$i]["contenu"] = $this->contenu->selectCoursEnFctModule($array["modulesEnseignants"][$i]["ident"]);
+            $array["admin"] =  $_SESSION["admin"];
+            $login = $_SESSION["login"];
+            //On charge les modèles dont on aura besoin
+            $this->load->model("contenu");
+            $this->load->model("user");
+            $this->load->model("module");
+            $array['login'] = $login;
+        if(isset($module)){
+            $array["enseignant"] =  $this->user->selectEnseignant();
+            $array["modulesEnseignants"] =  $this->module->selectTousLesModulesAvecInfosEnseignant($module);
+            for($i = 0; $i < count($array["modulesEnseignants"]); $i ++){
+                $array["modulesEnseignants"][$i]["contenu"] = $this->contenu->selectCoursEnFctModule($array["modulesEnseignants"][$i]["ident"]);
+            }
+        }
+        else{
+            $array["enseignant"] =  $this->user->selectEnseignant();
+            $array["modulesEnseignants"] =  $this->module->selectTousLesModulesAvecInfosEnseignant();
+            for($i = 0; $i < count($array["modulesEnseignants"]); $i ++){
+                $array["modulesEnseignants"][$i]["contenu"] = $this->contenu->selectCoursEnFctModule($array["modulesEnseignants"][$i]["ident"]);
+            }
         }
         //On affiche les erreurs possible retournés par les fonctions de modification de données (add, remove, ...)
         if(isset($_SESSION['erreur'])){
