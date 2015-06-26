@@ -106,7 +106,7 @@ class Tous_les_cours extends MY_MainController {
         $this->filter_access(true);
         $module = $_GET['module'];
         $name = $_GET['name'];
-        $nb_heure = $_GET['nb_heure'];
+        //$nb_heure = $_GET['nb_heure'];
         //On charge les modèles dont on aura besoin
         $this->load->model("contenu");
         //On supprime le cours liée (nom et module en clé primaire)

@@ -71,7 +71,10 @@
 		    background-color: #D9534F;
 		    border-color: #D43F3A;
 		    float: right;
-		    margin-right: 5%;
+				margin-left: 5px;
+		}
+		.ajouter_partie{
+			margin-right: 5%;
 		}
 		.btn-no-color{
 			color: #3F443A;
@@ -190,9 +193,13 @@
 											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 											echo '<td><a class="btn btn-default module_btn" href="http://localhost/Projet/index.php/enseignant/'.$contenu['login'].'"
 															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;';
-											if((isset($admin) && $admin == true) || ($contenu["login"] == $login)){
-												echo '<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-no-color"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
-											}
+											if((isset($admin) && $admin == true) || ($contenu["login"] == $login))
+												echo '<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-no-color"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
+											if(isset($admin) && $admin == true)
+												echo "<a href='tous_les_cours/removePartie?module=".$modulesEnseignants[$i]['ident']."&name=".$contenu['partie']."' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
+
+											echo '</td></tr>';
+
 
 										}
 										else{
@@ -207,8 +214,12 @@
 												  foreach ($enseignant as $prof) {
 												  	echo '<li><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'&login='.$prof['login'].'">'.$prof['prenom'].' '.$prof['nom'].'</a></li>';
 												  }
-												   echo '</ul>
-												</div></td></tr>';
+												   echo "</ul>
+													<a href='tous_les_cours/removePartie?module=".$modulesEnseignants[$i]['ident']."&name=".$contenu['partie']."' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>
+
+												</div>
+												</td>
+												</tr>";
 											}
 											else{
 												echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
@@ -251,10 +262,11 @@
 											echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";
 											echo '<td><a class="btn btn-default module_btn" href="http://localhost/Projet/index.php/enseignant/'.$contenu['login'].'"
 															aria-expanded="false" aria-controls="collapseExample">'.$contenu['nom'].' 	'.$contenu['prenom'].'</a>&nbsp;&nbsp;';
-											if((isset($admin) && $admin == true) || ($contenu["login"] == $login)){
-												echo '<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-no-color"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td></tr>';
-											}
-
+											if((isset($admin) && $admin == true) || ($contenu["login"] == $login))
+												echo '<a href="tous_les_cours/RemoveProf?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'" class="btn btn-no-color"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
+											if(isset($admin) && $admin == true)
+												echo "<a href='tous_les_cours/removePartie?module=".$modulesEnseignants[$i]['ident']."&name=".$contenu['partie']."' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
+											echo '</td></tr>';
 										}
 										else{
 											if(isset($admin) && $admin == true){
@@ -268,8 +280,9 @@
 												  foreach ($enseignant as $prof) {
 												  	echo '<li><a href="tous_les_cours/ReserveCours?module='.$modulesEnseignants[$i]['ident'].'&partie='.$contenu["partie"].'&login='.$prof['login'].'">'.$prof['prenom'].' '.$prof['nom'].'</a></li>';
 												  }
-												   echo '</ul>
-												</div></td></tr>';
+												   echo "</ul>
+													<a href='tous_les_cours/removePartie?module=".$modulesEnseignants[$i]['ident']."&name=".$contenu['partie']."' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>
+												</div></td></tr>";
 											}
 											else{
 												echo "<tr><td><label>".$contenu["partie"]." (".$contenu["hed"]." h) : &nbsp;</label></td>";

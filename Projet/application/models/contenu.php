@@ -33,7 +33,7 @@
 	    	$sql = "SELECT * FROM contenu left join enseignant on enseignant=login WHERE module = ? AND type = 'Projet';";
 			return $this->db->query($sql, array($module))->result_array();
 	    }
-		
+
 		//Retourne un tableau contenant les contenus en fonction d'un login
 	    function selectCountCoursForLogin($login){
 			$sql = "SELECT sum(hed) FROM contenu WHERE enseignant  = ?";
@@ -176,7 +176,7 @@
 				if( (int)$result[0]['heure_restante'] - (int)$nb_heure_module < 0 && (int)$result[0]['decharge'] > 0)
 					return array("erreur" => true, "message" => "Impossible d'ajouter cet enseignant à ce contenu car il dépasserai son nombre d'heure autorisé. Pour plus d'informations, contactez un administrateur.");
 				$sql = "UPDATE contenu SET enseignant = ? WHERE module = ? AND partie = ?";
-				$result = $this->db->query($sql, array($enseignant, $module, $partie));	
+				$result = $this->db->query($sql, array($enseignant, $module, $partie));
 				if(!$result)
 					return array("erreur" => true, "message" => "Une erreur est survenu lors de l'assignation de cette partie à ce professeur, veuillez réessayer. Pour plus d'informations, contactez l'administrateur.");
 			}else{
@@ -188,7 +188,7 @@
 		function removeContenu($module, $partie){
  			$sql = "SELECT * FROM contenu WHERE module = '$module' AND partie = '$partie'";
  			$result = $this->db->query($sql)->result_array();
- 			if(count($result) != 0){
+ 			if(count($result) == 0){
  				return array("erreur" => true, "message" => "Ce module n'existe pas !");
  			}else{
  				$sql = "DELETE FROM contenu WHERE module = '$module' AND partie = '$partie'";
@@ -221,6 +221,6 @@
 			else
 				return $this->db->query("SELECT module.ident as Identifiant, module.libelle as Libelle, module.semestre as Semestre, contenu.partie as Partie, contenu.hed as 'Heure(s) equivalent TD', enseignant.prenom as Prenom, enseignant.nom as Nom FROM contenu NATURAL JOIN module LEFT JOIN enseignant ON contenu.enseignant = enseignant.login WHERE contenu.module = module.ident ORDER BY module.ident, contenu.type, contenu.partie");
 		}
-		
+
 	}
 ?>
