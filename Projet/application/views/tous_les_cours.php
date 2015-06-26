@@ -105,17 +105,23 @@
 			if(isset($erreur)){
 				echo '<div class="alert alert-danger" role="alert">'.$erreur["message"].'</div>';
 			}
-			echo "<div class='col-lg-9' style='margin-bottom:20px'>";
+			echo "<div style='margin-bottom:50px'><div class='col-lg-6'>";
 			if(isset($admin) && $admin == true){
 				echo "
 				<button id='buton_add_module' class='btn btn-primary'>Ajouter un module</button>";
 			}
 			echo "<a href='/tous_les_cours/ExportContenu' class='btn btn-success'>Export .csv</a>
-				<form action='tous_les_cours' class='search_form' method='get' accept-charset='utf-8'>
-					<input type='text' name='module' value='' placeholder='Module'>
-					<button class='btn btn-default' type='submit'>Go!</button>
-				</form>
-			</div>";
+			</div>
+			<form action='tous_les_cours' class='search_form' method='get' accept-charset='utf-8'>
+				<div class='col-lg-6'>
+				    <div class='input-group'>
+				      <input type='text' name='module' class='form-control' placeholder='Chercher un module'>
+				      <span class='input-group-btn'>
+				        <button class='btn btn-default' type='submit' style='min-width:0'>Chercher</button>
+				      </span>
+				    </div>
+				  </div>
+				</form></div>";
 
 		?>
 		<div class='col-lg-9' style='margin-bottom:20px;' id='add_module'>
